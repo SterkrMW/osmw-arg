@@ -6,6 +6,7 @@ export interface KvStore {
 	get<T>(key: string): Promise<T | null>;
 	set<T>(key: string, value: T, options?: { nx?: boolean }): Promise<'OK' | null>;
 	mget<T>(...keys: string[]): Promise<(T | null)[]>;
+	del(...keys: string[]): Promise<number>;
 }
 
 class InMemoryKv implements KvStore {
@@ -23,6 +24,14 @@ class InMemoryKv implements KvStore {
 
 	public async mget<T>(...keys: string[]): Promise<(T | null)[]> {
 		return keys.map(k => (this.store.get(k) as T) ?? null);
+	}
+
+	public async del(...keys: string[]): Promise<number> {
+		let count = 0;
+		for (const k of keys) {
+			if (this.store.delete(k)) count++;
+		}
+		return count;
 	}
 }
 
@@ -42,6 +51,10 @@ class RedisKv implements KvStore {
 	public async mget<T>(...keys: string[]): Promise<(T | null)[]> {
 		const vals = await this.client.mGet(keys);
 		return vals.map(v => (v === null ? null : (JSON.parse(v) as T)));
+	}
+
+	public async del(...keys: string[]): Promise<number> {
+		return this.client.del(keys);
 	}
 }
 
