@@ -1,10 +1,10 @@
 import { getKv } from './_kv';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import type { UnlockedComboEntry } from '../src/types';
+
+export type { UnlockedComboEntry };
 
 const ALL_COMBO_KEYS = [0, 1, 2, 3].flatMap(r1 => [0, 1, 2, 3].map(r2 => `combo:${r1}_${r2}`));
-
-// Re-export from shared types so the API and frontend agree on the shape
-export type { UnlockedComboEntry } from '../src/types';
 
 export default async function handler(_req: VercelRequest, res: VercelResponse): Promise<void> {
 	const kv = await getKv();
