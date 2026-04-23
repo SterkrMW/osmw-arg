@@ -62,8 +62,9 @@ body {
 	color: var(--ink-soft);
 	min-height: 100vh;
 	background-color: var(--backdrop);
-	background-image: url('./background.webp');
+	background-image: url('./bgsmall.webp');
 	background-repeat: repeat;
+	background-blend-mode: soft-light;
 	font-kerning: normal;
 	font-variant-ligatures: common-ligatures;
 	font-variant-numeric: oldstyle-nums;
