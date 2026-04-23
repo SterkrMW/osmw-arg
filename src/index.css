@@ -92,6 +92,36 @@ header h1 {
 	font-size: 0.95rem;
 }
 
+.subtitle-error {
+	color: var(--text-primary);
+}
+
+.retry-button {
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
+	font: inherit;
+	color: var(--accent-primary);
+	cursor: pointer;
+	text-decoration: underline;
+	text-underline-offset: 2px;
+}
+
+.retry-button:hover,
+.retry-button:focus-visible {
+	color: var(--accent-secondary);
+	outline: none;
+}
+
+.intro {
+	margin: 1rem auto 0;
+	max-width: 38rem;
+	color: var(--text-secondary);
+	font-size: 0.9rem;
+	line-height: 1.6;
+}
+
 /* ── Grid layout ─────────────────────────────────────────────────────── */
 .grid-wrapper {
 	position: relative;
@@ -197,12 +227,6 @@ header h1 {
 	margin-top: 2px;
 }
 
-.card-undiscovered {
-	font-size: 0.7rem;
-	color: var(--text-secondary);
-	font-style: italic;
-}
-
 .card-lore {
 	font-size: 0.75rem;
 	color: var(--text-primary);
@@ -272,10 +296,6 @@ header h1 {
 
 	.card-path {
 		font-size: 0.7rem;
-	}
-
-	.card-undiscovered {
-		font-size: 0.68rem;
 	}
 
 	.card-lore {

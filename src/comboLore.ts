@@ -71,13 +71,13 @@ export const comboLore: Record<string, ComboLore> = {
 	'2_3': {
 		name: 'The Calculated Annihilation',
 		flavourText:
-			'Gives bonuses and stuff',
+			"A lifetime of incantations distilled into a cold algorithm. The mage's tremor is gone. The doubt is gone. What remains weighs every spell against every counter, and casts only the answer.",
 	},
 	// ── Borg → * ─────────────────────────────────────────────────────────────
 	'3_0': {
 		name: 'The Reclaimed',
 		flavourText:
-			'Gives bonuses and stuff',
+			'To shed the chassis is no small unmaking. The heartbeat felt foreign at first — too irregular, too slow. But something old and patient had been waiting in the dark of their own ribs, and it knew them when they came home.',
 	},
 	'3_1': {
 		name: 'The Unfettered Circuit',

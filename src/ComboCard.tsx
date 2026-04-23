@@ -38,11 +38,10 @@ export default function ComboCard({ comboKey, entry }: Props): JSX.Element {
 				</>
 			) : (
 				<>
-					<img className="card-lock" src={lockedIcon} alt="Locked" />
+					<img className="card-lock" src={lockedIcon} alt="" />
 					<div className="card-path locked-path">
 						{RACE_NAMES[r1]} → {RACE_NAMES[r2]}
 					</div>
-					<div className="card-undiscovered">Undiscovered</div>
 				</>
 			)}
 		</div>
