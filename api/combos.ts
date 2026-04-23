@@ -8,7 +8,7 @@ const ALL_COMBO_KEYS = [0, 1, 2, 3].flatMap(r1 => [0, 1, 2, 3].map(r2 => `combo:
 
 export default async function handler(_req: VercelRequest, res: VercelResponse): Promise<void> {
 	const kv = await getKv();
-	const values = await kv.mget<(UnlockedComboEntry | null)[]>(...ALL_COMBO_KEYS);
+	const values = await kv.mget<UnlockedComboEntry>(...ALL_COMBO_KEYS);
 
 	const unlocked: Record<string, UnlockedComboEntry> = {};
 	for (let i = 0; i < ALL_COMBO_KEYS.length; i++) {
