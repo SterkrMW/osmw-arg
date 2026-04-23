@@ -1,0 +1,227 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+:root {
+	/* Background colors - dark charcoal/teal (matching main site) */
+	--bg-primary: #1a2a2a;
+	--bg-secondary: #263535;
+	--bg-tertiary: #2d4040;
+	--bg-card: rgba(38, 53, 53, 0.95);
+
+	/* Accent colors - cyan/teal */
+	--accent-primary: #00bcd4;
+	--accent-secondary: #26c6da;
+	--accent-glow: rgba(0, 188, 212, 0.3);
+	--accent-dim: rgba(0, 188, 212, 0.18);
+
+	/* Text colors */
+	--text-primary: #e0e6e6;
+	--text-secondary: #8b9a9a;
+	--text-accent: #00bcd4;
+
+	/* UI */
+	--border-color: rgba(0, 188, 212, 0.3);
+	--border-radius: 2px;
+	--card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+	/* Status */
+	--gold: #c9a84c;
+	--success: #10b981;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	color: var(--text-primary);
+	min-height: 100vh;
+	background: var(--bg-primary);
+}
+
+/* ── Background with blur + gradient overlays (matching main site) ────── */
+body::before {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -2;
+	background-image: url('./assets/bg-main.webp');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	filter: blur(2px);
+}
+
+body::after {
+	content: '';
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background:
+		linear-gradient(to bottom right, rgba(30, 41, 59, 0.45), rgba(30, 41, 59, 0.55)),
+		linear-gradient(to top, rgba(20, 83, 90, 0.15), transparent, rgba(30, 41, 59, 0.25)),
+		radial-gradient(ellipse at top, rgba(6, 182, 212, 0.08), rgba(45, 212, 191, 0.03), transparent),
+		linear-gradient(to bottom, transparent, transparent, rgba(16, 185, 129, 0.1));
+	pointer-events: none;
+}
+
+/* ── App container ───────────────────────────────────────────────────── */
+.app {
+	max-width: 1100px;
+	margin: 0 auto;
+	padding: 2.5rem 1.5rem 4rem;
+	position: relative;
+}
+
+/* ── Header ──────────────────────────────────────────────────────────── */
+header {
+	text-align: center;
+	margin-bottom: 2.5rem;
+}
+
+header h1 {
+	font-size: 2rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	text-shadow: 0 0 15px var(--accent-glow);
+}
+
+.subtitle {
+	margin-top: 0.5rem;
+	color: var(--text-secondary);
+	font-size: 0.95rem;
+}
+
+/* ── Grid layout ─────────────────────────────────────────────────────── */
+.grid-wrapper {
+	position: relative;
+}
+
+.axis-label {
+	font-size: 0.75rem;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin-bottom: 0.5rem;
+}
+
+.col-axis {
+	margin-top: 0.5rem;
+	text-align: right;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 8px;
+}
+
+.grid-corner { /* empty top-left cell */ }
+
+.grid-col-header,
+.grid-row-header {
+	font-size: 0.78rem;
+	font-weight: 600;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px 0;
+}
+
+.grid-row-header {
+	justify-content: flex-end;
+	padding-right: 10px;
+}
+
+/* ── Cards ────────────────────────────────────────────────────────────── */
+.combo-card {
+	border-radius: var(--border-radius);
+	border: 1px solid var(--border-color);
+	padding: 12px;
+	min-height: 140px;
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+	backdrop-filter: blur(6px);
+}
+
+.combo-card:hover {
+	box-shadow: 0 0 12px var(--accent-glow);
+}
+
+.combo-card.locked {
+	background: rgba(26, 42, 42, 0.7);
+	align-items: center;
+	justify-content: center;
+}
+
+.combo-card.unlocked {
+	background: var(--bg-card);
+	border-color: var(--accent-primary);
+	box-shadow: var(--card-shadow), 0 0 8px var(--accent-glow);
+	animation: reveal 0.5s ease;
+}
+
+@keyframes reveal {
+	from { opacity: 0; transform: translateY(4px); }
+	to   { opacity: 1; transform: translateY(0); }
+}
+
+.card-lock {
+	width: 2rem;
+	height: 2rem;
+	margin-bottom: 4px;
+	opacity: 0.5;
+	object-fit: contain;
+}
+
+.card-name {
+	font-size: 0.82rem;
+	font-weight: 700;
+	color: var(--accent-primary);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	text-shadow: 0 0 8px var(--accent-glow);
+}
+
+.card-path {
+	font-size: 0.72rem;
+	color: var(--text-secondary);
+}
+
+.locked-path {
+	margin-top: 2px;
+}
+
+.card-undiscovered {
+	font-size: 0.7rem;
+	color: var(--text-secondary);
+	font-style: italic;
+}
+
+.card-lore {
+	font-size: 0.75rem;
+	color: var(--text-primary);
+	line-height: 1.5;
+	flex: 1;
+}
+
+.card-discoverer {
+	font-size: 0.7rem;
+	color: var(--text-secondary);
+	margin-top: auto;
+	padding-top: 6px;
+	border-top: 1px solid var(--border-color);
+}
+
+.card-discoverer strong {
+	color: var(--gold);
+}
+
+.card-date {
+	opacity: 0.7;
+}
