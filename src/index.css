@@ -3,6 +3,7 @@
 	--backdrop: oklch(0.06 0.008 40);
 	--leading: oklch(0.10 0.006 55);
 	--leading-width: 3px;
+	--frame-width: 14px;
 
 	/* ── Inscription palette ─────────────────────────────────────────────── */
 	--ink-bright: oklch(0.94 0.018 80);
@@ -60,7 +61,9 @@ body {
 	font-family: var(--font-body);
 	color: var(--ink-soft);
 	min-height: 100vh;
-	background: var(--backdrop);
+	background-color: var(--backdrop);
+	background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='280' height='280'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/></filter><rect width='280' height='280' filter='url(%23n)' opacity='0.06'/></svg>");
+	background-size: 280px 280px;
 	font-kerning: normal;
 	font-variant-ligatures: common-ligatures;
 	font-variant-numeric: oldstyle-nums;
@@ -173,7 +176,7 @@ header h1 {
 	grid-column: 2;
 	grid-row: 1;
 	grid-template-columns: repeat(4, 1fr);
-	padding: 0 var(--leading-width);
+	padding: 0 var(--frame-width);
 }
 
 .axis-headers-top > span {
@@ -184,7 +187,7 @@ header h1 {
 	grid-column: 1;
 	grid-row: 2;
 	grid-template-rows: repeat(4, 1fr);
-	padding: var(--leading-width) 0;
+	padding: var(--frame-width) 0;
 }
 
 .axis-headers-left > span {
@@ -195,7 +198,7 @@ header h1 {
 	grid-column: 2;
 	grid-row: 2;
 	background: var(--leading);
-	padding: var(--leading-width);
+	padding: var(--frame-width);
 	position: relative;
 }
 
@@ -242,6 +245,7 @@ header h1 {
 	animation: pane-illuminate 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
+.combo-card.is-illuminating .card-discoverer-label,
 .combo-card.is-illuminating .card-discoverer-name,
 .combo-card.is-illuminating .card-name,
 .combo-card.is-illuminating .card-lore,
@@ -271,6 +275,7 @@ header h1 {
 @media (prefers-reduced-motion: reduce) {
 	.app,
 	.combo-card.is-illuminating,
+	.combo-card.is-illuminating .card-discoverer-label,
 	.combo-card.is-illuminating .card-discoverer-name,
 	.combo-card.is-illuminating .card-name,
 	.combo-card.is-illuminating .card-lore,
@@ -288,6 +293,16 @@ header h1 {
 }
 
 /* ── Lit-pane content ───────────────────────────────────────────────── */
+.card-discoverer-label {
+	font-family: var(--font-display);
+	font-size: var(--text-xs);
+	color: var(--ink-dim);
+	text-transform: lowercase;
+	letter-spacing: 0.18em;
+	line-height: 1;
+	margin-bottom: 4px;
+}
+
 .card-discoverer-name {
 	font-family: var(--font-body);
 	font-style: italic;

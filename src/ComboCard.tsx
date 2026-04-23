@@ -44,6 +44,7 @@ export default function ComboCard({
 		<div className={className} style={paneStyle}>
 			{isUnlocked && lore ? (
 				<>
+					<div className="card-discoverer-label">First walked by</div>
 					<div className="card-discoverer-name">{entry.discovererName}</div>
 					<div className="card-name">{lore.name}</div>
 					<div className="card-path">
