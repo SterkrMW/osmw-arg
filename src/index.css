@@ -2,6 +2,7 @@
 	/* ── Cathedral structure ─────────────────────────────────────────────── */
 	--backdrop: oklch(0.06 0.008 40);
 	--leading: oklch(0.10 0.006 55);
+	--frame-color: oklch(0.72 0.16 82);
 	--leading-width: 3px;
 	--frame-width: 14px;
 
@@ -202,6 +203,7 @@ header h1 {
 	background: var(--leading);
 	padding: var(--frame-width);
 	position: relative;
+	box-shadow: inset 0 0 0 var(--frame-width) var(--frame-color);
 }
 
 .grid {
@@ -227,13 +229,17 @@ header h1 {
 }
 
 .combo-card.locked {
-	background: color-mix(in oklab, var(--leading) 82%, var(--pane-color));
+	background: color-mix(
+		in oklab,
+		color-mix(in oklab, var(--leading) 82%, var(--pane-color)) 88%,
+		transparent
+	);
 	align-items: center;
 	justify-content: center;
 }
 
 .combo-card.unlocked {
-	background: var(--pane-color);
+	background: color-mix(in oklab, var(--pane-color) 90%, transparent);
 }
 
 .combo-card:hover {
@@ -264,7 +270,7 @@ header h1 {
 		filter: brightness(0.7) saturate(0.7);
 	}
 	100% {
-		background: var(--pane-color);
+		background: color-mix(in oklab, var(--pane-color) 90%, transparent);
 		filter: brightness(1) saturate(1);
 	}
 }
