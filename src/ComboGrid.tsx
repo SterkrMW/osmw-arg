@@ -6,9 +6,10 @@ const RACE_NAMES = ['Human', 'Centaur', 'Mage', 'Borg'];
 
 interface Props {
 	unlocked: UnlockedMap;
+	illuminating: Set<string>;
 }
 
-export default function ComboGrid({ unlocked }: Props): JSX.Element {
+export default function ComboGrid({ unlocked, illuminating }: Props): JSX.Element {
 	return (
 		<div className="grid-frame">
 			<div className="axis-headers axis-headers-top" aria-hidden="true">
@@ -28,7 +29,12 @@ export default function ComboGrid({ unlocked }: Props): JSX.Element {
 							{RACE_NAMES.map((_tier2Name, tier2) => {
 								const key = `${tier1}_${tier2}`;
 								return (
-									<ComboCard key={key} comboKey={key} entry={unlocked[key] ?? null} />
+									<ComboCard
+										key={key}
+										comboKey={key}
+										entry={unlocked[key] ?? null}
+										isIlluminating={illuminating.has(key)}
+									/>
 								);
 							})}
 						</Fragment>

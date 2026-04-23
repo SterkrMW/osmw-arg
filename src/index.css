@@ -2,7 +2,6 @@
 	/* ── Cathedral structure ─────────────────────────────────────────────── */
 	--backdrop: oklch(0.06 0.008 40);
 	--leading: oklch(0.10 0.006 55);
-	--leading-soft: oklch(0.14 0.008 55);
 	--leading-width: 3px;
 
 	/* ── Inscription palette ─────────────────────────────────────────────── */
@@ -44,7 +43,6 @@
 	--font-body: 'IM Fell English', ui-serif, Georgia, 'Times New Roman', serif;
 
 	/* Type scale (1.25 ratio, fixed rem — app UI) */
-	--text-2xs: 0.75rem;    /* 12px — smallest marks */
 	--text-xs: 0.8125rem;   /* 13px — labels, date */
 	--text-sm: 0.875rem;    /* 14px — subtitle, combo name */
 	--text-base: 1rem;      /* 16px — lore body, intro */
@@ -76,6 +74,12 @@ body {
 	margin: 0 auto;
 	padding: 3.5rem 1.5rem 4rem;
 	position: relative;
+	animation: app-enter 400ms ease-out both;
+}
+
+@keyframes app-enter {
+	from { opacity: 0; }
+	to   { opacity: 1; }
 }
 
 /* ── Header ──────────────────────────────────────────────────────────── */
@@ -103,6 +107,12 @@ header h1 {
 
 .subtitle-error {
 	color: var(--ink-soft);
+}
+
+.subtitle-meta {
+	font-style: italic;
+	color: var(--ink-dim);
+	letter-spacing: 0;
 }
 
 .retry-button {
@@ -209,7 +219,6 @@ header h1 {
 	flex-direction: column;
 	gap: 6px;
 	transition: filter 0.3s ease;
-	animation: pane-settle 450ms ease-out both;
 }
 
 .combo-card.locked {
@@ -240,11 +249,6 @@ header h1 {
 	animation: ink-dries 900ms ease-out 1.5s both;
 }
 
-@keyframes pane-settle {
-	from { opacity: 0; transform: translateY(2px); }
-	to   { opacity: 1; transform: translateY(0); }
-}
-
 @keyframes pane-illuminate {
 	0% {
 		background: color-mix(in oklab, var(--leading) 92%, var(--pane-color));
@@ -265,7 +269,7 @@ header h1 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.combo-card,
+	.app,
 	.combo-card.is-illuminating,
 	.combo-card.is-illuminating .card-discoverer-name,
 	.combo-card.is-illuminating .card-name,

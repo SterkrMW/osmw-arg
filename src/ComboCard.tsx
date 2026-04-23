@@ -6,6 +6,7 @@ import RaceGlyph from './RaceGlyph';
 interface Props {
 	comboKey: string;
 	entry: UnlockedComboEntry | null;
+	isIlluminating?: boolean;
 }
 
 const RACE_NAMES = ['Human', 'Centaur', 'Mage', 'Borg'];
@@ -18,7 +19,11 @@ function formatDate(ts: number): string {
 	});
 }
 
-export default function ComboCard({ comboKey, entry }: Props): JSX.Element {
+export default function ComboCard({
+	comboKey,
+	entry,
+	isIlluminating = false,
+}: Props): JSX.Element {
 	const [r1, r2] = comboKey.split('_').map(Number);
 	const lore = comboLore[comboKey];
 	const isUnlocked = entry !== null;
@@ -27,11 +32,16 @@ export default function ComboCard({ comboKey, entry }: Props): JSX.Element {
 		'--pane-color': `var(--pane-${comboKey})`,
 	} as CSSProperties;
 
+	const className = [
+		'combo-card',
+		isUnlocked ? 'unlocked' : 'locked',
+		isIlluminating ? 'is-illuminating' : '',
+	]
+		.filter(Boolean)
+		.join(' ');
+
 	return (
-		<div
-			className={`combo-card ${isUnlocked ? 'unlocked' : 'locked'}`}
-			style={paneStyle}
-		>
+		<div className={className} style={paneStyle}>
 			{isUnlocked && lore ? (
 				<>
 					<div className="card-discoverer-name">{entry.discovererName}</div>
