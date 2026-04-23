@@ -1,5 +1,5 @@
 import { timingSafeEqual } from 'crypto';
-import { getKv } from './_kv';
+import { getKv } from './_kv.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
 const COMBO_KEY_RE = /^[0-3]_[0-3]$/;

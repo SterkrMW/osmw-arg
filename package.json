@@ -2,6 +2,7 @@
 	"name": "combo-tracker",
 	"version": "1.0.0",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"start": "concurrently -n api,vite -c blue,green \"tsx scripts/dev-api.ts\" \"vite\"",
 		"build": "tsc && vite build",

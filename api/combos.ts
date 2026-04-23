@@ -1,4 +1,4 @@
-import { getKv } from './_kv';
+import { getKv } from './_kv.js';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import type { UnlockedComboEntry } from '../src/types';
 
