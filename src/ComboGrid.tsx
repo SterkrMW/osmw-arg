@@ -23,22 +23,24 @@ export default function ComboGrid({ unlocked, illuminating }: Props): JSX.Elemen
 				))}
 			</div>
 			<div className="grid-wrapper">
-				<div className="grid">
-					{RACE_NAMES.map((_tier1Name, tier1) => (
-						<Fragment key={tier1}>
-							{RACE_NAMES.map((_tier2Name, tier2) => {
-								const key = `${tier1}_${tier2}`;
-								return (
-									<ComboCard
-										key={key}
-										comboKey={key}
-										entry={unlocked[key] ?? null}
-										isIlluminating={illuminating.has(key)}
-									/>
-								);
-							})}
-						</Fragment>
-					))}
+				<div className="grid-inner">
+					<div className="grid">
+						{RACE_NAMES.map((_tier1Name, tier1) => (
+							<Fragment key={tier1}>
+								{RACE_NAMES.map((_tier2Name, tier2) => {
+									const key = `${tier1}_${tier2}`;
+									return (
+										<ComboCard
+											key={key}
+											comboKey={key}
+											entry={unlocked[key] ?? null}
+											isIlluminating={illuminating.has(key)}
+										/>
+									);
+								})}
+							</Fragment>
+						))}
+					</div>
 				</div>
 			</div>
 		</div>
