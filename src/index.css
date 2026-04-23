@@ -1,73 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
 :root {
-	/* Background colors - dark charcoal/teal (matching main site) */
-	--bg-primary: #1a2a2a;
-	--bg-secondary: #263535;
-	--bg-tertiary: #2d4040;
-	--bg-card: rgba(38, 53, 53, 0.95);
+	/* ── Cathedral structure ─────────────────────────────────────────────── */
+	--backdrop: oklch(0.06 0.008 25);
+	--leading: oklch(0.10 0.01 280);
+	--leading-soft: oklch(0.14 0.012 280);
+	--leading-width: 3px;
 
-	/* Accent colors - cyan/teal */
-	--accent-primary: #00bcd4;
-	--accent-secondary: #26c6da;
-	--accent-glow: rgba(0, 188, 212, 0.3);
-	--accent-dim: rgba(0, 188, 212, 0.18);
+	/* ── Inscription palette ─────────────────────────────────────────────── */
+	--ink-bright: oklch(0.94 0.018 80);
+	--ink-soft: oklch(0.78 0.025 80);
+	--ink-dim: oklch(0.55 0.03 80);
 
-	/* Text colors */
-	--text-primary: #e0e6e6;
-	--text-secondary: #8b9a9a;
-	--text-accent: #00bcd4;
+	/* ── Pane palette — keyed by destination race (tier2) ───────────────── */
+	/* Tier2 = 0 — Human destination — amber/gold family */
+	--pane-0_0: oklch(0.55 0.16 65);
+	--pane-1_0: oklch(0.50 0.14 50);
+	--pane-2_0: oklch(0.58 0.16 80);
+	--pane-3_0: oklch(0.48 0.13 35);
 
-	/* UI */
-	--border-color: rgba(0, 188, 212, 0.3);
-	--border-radius: 2px;
-	--card-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+	/* Tier2 = 1 — Centaur destination — green family */
+	--pane-0_1: oklch(0.50 0.13 145);
+	--pane-1_1: oklch(0.55 0.14 155);
+	--pane-2_1: oklch(0.45 0.12 130);
+	--pane-3_1: oklch(0.42 0.14 165);
 
-	/* Status */
-	--gold: #c9a84c;
-	--success: #10b981;
+	/* Tier2 = 2 — Mage destination — cobalt family */
+	--pane-0_2: oklch(0.45 0.16 250);
+	--pane-1_2: oklch(0.40 0.15 265);
+	--pane-2_2: oklch(0.48 0.15 240);
+	--pane-3_2: oklch(0.36 0.14 270);
+
+	/* Tier2 = 3 — Borg destination — violet family */
+	--pane-0_3: oklch(0.42 0.16 320);
+	--pane-1_3: oklch(0.40 0.15 340);
+	--pane-2_3: oklch(0.45 0.16 305);
+	--pane-3_3: oklch(0.36 0.15 295);
+
+	/* ── Typography (placeholders — /typeset will replace) ──────────────── */
+	--font-display: ui-serif, Georgia, 'Times New Roman', serif;
+	--font-body: ui-serif, Georgia, 'Times New Roman', serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-	color: var(--text-primary);
+	font-family: var(--font-body);
+	color: var(--ink-soft);
 	min-height: 100vh;
-	background: var(--bg-primary);
-}
-
-/* ── Background with blur + gradient overlays (matching main site) ────── */
-body::before {
-	content: '';
-	position: fixed;
-	inset: 0;
-	z-index: -2;
-	background-image: url('./assets/bg-main.webp');
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-	filter: blur(2px);
-}
-
-body::after {
-	content: '';
-	position: fixed;
-	inset: 0;
-	z-index: -1;
-	background:
-		linear-gradient(to bottom right, rgba(30, 41, 59, 0.45), rgba(30, 41, 59, 0.55)),
-		linear-gradient(to top, rgba(20, 83, 90, 0.15), transparent, rgba(30, 41, 59, 0.25)),
-		radial-gradient(ellipse at top, rgba(6, 182, 212, 0.08), rgba(45, 212, 191, 0.03), transparent),
-		linear-gradient(to bottom, transparent, transparent, rgba(16, 185, 129, 0.1));
-	pointer-events: none;
+	background: var(--backdrop);
 }
 
 /* ── App container ───────────────────────────────────────────────────── */
 .app {
 	max-width: 1100px;
 	margin: 0 auto;
-	padding: 2.5rem 1.5rem 4rem;
+	padding: 3.5rem 1.5rem 4rem;
 	position: relative;
 }
 
@@ -78,22 +64,23 @@ header {
 }
 
 header h1 {
-	font-size: 2rem;
-	font-weight: 700;
-	color: var(--accent-primary);
-	letter-spacing: 0.05em;
+	font-family: var(--font-display);
+	font-size: 1.75rem;
+	font-weight: 500;
+	color: var(--ink-bright);
+	letter-spacing: 0.18em;
 	text-transform: uppercase;
-	text-shadow: 0 0 15px var(--accent-glow);
 }
 
 .subtitle {
-	margin-top: 0.5rem;
-	color: var(--text-secondary);
-	font-size: 0.95rem;
+	margin-top: 0.75rem;
+	color: var(--ink-dim);
+	font-size: 0.875rem;
+	letter-spacing: 0.04em;
 }
 
 .subtitle-error {
-	color: var(--text-primary);
+	color: var(--ink-soft);
 }
 
 .retry-button {
@@ -102,207 +89,232 @@ header h1 {
 	padding: 0;
 	margin: 0;
 	font: inherit;
-	color: var(--accent-primary);
+	color: var(--ink-bright);
 	cursor: pointer;
 	text-decoration: underline;
-	text-underline-offset: 2px;
+	text-underline-offset: 3px;
+	text-decoration-thickness: 1px;
 }
 
 .retry-button:hover,
 .retry-button:focus-visible {
-	color: var(--accent-secondary);
+	color: var(--ink-bright);
+	text-decoration-thickness: 2px;
 	outline: none;
 }
 
 .intro {
-	margin: 1rem auto 0;
+	margin: 1.5rem auto 0;
 	max-width: 38rem;
-	color: var(--text-secondary);
-	font-size: 0.9rem;
-	line-height: 1.6;
+	color: var(--ink-soft);
+	font-size: 0.95rem;
+	line-height: 1.7;
 }
 
-/* ── Grid layout ─────────────────────────────────────────────────────── */
+/* ── Window armature ─────────────────────────────────────────────────── */
 .grid-wrapper {
+	background: var(--leading);
+	padding: var(--leading-width);
 	position: relative;
-}
-
-.axis-label {
-	font-size: 0.75rem;
-	color: var(--text-secondary);
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-	margin-bottom: 0.5rem;
-}
-
-.col-axis {
-	margin-top: 0.5rem;
-	text-align: right;
 }
 
 .grid {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: 8px;
+	gap: var(--leading-width);
 }
 
-.grid-corner { /* empty top-left cell */ }
-
-.grid-col-header,
-.grid-row-header {
-	font-size: 0.78rem;
-	font-weight: 600;
-	color: var(--text-secondary);
-	text-transform: uppercase;
-	letter-spacing: 0.06em;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 4px 0;
-}
-
-.grid-row-header {
-	justify-content: flex-end;
-	padding-right: 10px;
-}
-
-/* ── Cards ────────────────────────────────────────────────────────────── */
+/* ── Panes ───────────────────────────────────────────────────────────── */
 .combo-card {
-	border-radius: var(--border-radius);
-	border: 1px solid var(--border-color);
-	padding: 12px;
-	min-height: 140px;
+	position: relative;
+	padding: 14px 14px 12px;
+	min-height: 160px;
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
-	backdrop-filter: blur(6px);
-}
-
-.combo-card:hover {
-	box-shadow: 0 0 12px var(--accent-glow);
+	transition: filter 0.3s ease;
+	animation: pane-settle 450ms ease-out both;
 }
 
 .combo-card.locked {
-	background: rgba(26, 42, 42, 0.7);
+	background: color-mix(in oklch, var(--leading) 88%, var(--pane-color));
 	align-items: center;
 	justify-content: center;
 }
 
 .combo-card.unlocked {
-	background: var(--bg-card);
-	border-color: var(--accent-primary);
-	box-shadow: var(--card-shadow), 0 0 8px var(--accent-glow);
-	animation: reveal 0.5s ease;
+	background: var(--pane-color);
 }
 
-@keyframes reveal {
-	from { opacity: 0; transform: translateY(4px); }
+.combo-card:hover {
+	filter: brightness(1.08);
+}
+
+/* Reserved hook for the live-unlock sequence (wired up post-/bolder).
+   Trigger by adding `.is-illuminating` to a pane when the diff detects a
+   newly-lit combo. */
+.combo-card.is-illuminating {
+	animation: pane-illuminate 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.combo-card.is-illuminating .card-discoverer-name,
+.combo-card.is-illuminating .card-name,
+.combo-card.is-illuminating .card-lore,
+.combo-card.is-illuminating .card-date {
+	animation: ink-dries 900ms ease-out 1.5s both;
+}
+
+@keyframes pane-settle {
+	from { opacity: 0; transform: translateY(2px); }
 	to   { opacity: 1; transform: translateY(0); }
 }
 
-.card-lock {
-	width: 2rem;
-	height: 2rem;
-	margin-bottom: 4px;
-	opacity: 0.5;
-	object-fit: contain;
+@keyframes pane-illuminate {
+	0% {
+		background: color-mix(in oklch, var(--leading) 92%, var(--pane-color));
+		filter: brightness(0.45) saturate(0.4);
+	}
+	35% {
+		filter: brightness(0.7) saturate(0.7);
+	}
+	100% {
+		background: var(--pane-color);
+		filter: brightness(1) saturate(1);
+	}
+}
+
+@keyframes ink-dries {
+	from { opacity: 0; }
+	to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.combo-card,
+	.combo-card.is-illuminating,
+	.combo-card.is-illuminating .card-discoverer-name,
+	.combo-card.is-illuminating .card-name,
+	.combo-card.is-illuminating .card-lore,
+	.combo-card.is-illuminating .card-date {
+		animation: none;
+	}
+	.combo-card { transition: none; }
+}
+
+/* ── Locked-pane glyph ──────────────────────────────────────────────── */
+.card-glyph {
+	width: 2.4rem;
+	height: 2.4rem;
+	color: color-mix(in oklch, var(--leading) 65%, var(--pane-color));
+}
+
+/* ── Lit-pane content ───────────────────────────────────────────────── */
+.card-discoverer-name {
+	font-family: var(--font-display);
+	font-size: 1.15rem;
+	font-weight: 600;
+	color: var(--ink-bright);
+	letter-spacing: 0.04em;
+	line-height: 1.2;
 }
 
 .card-name {
-	font-size: 0.82rem;
-	font-weight: 700;
-	color: var(--accent-primary);
+	font-family: var(--font-display);
+	font-size: 0.78rem;
+	font-weight: 500;
+	color: var(--ink-bright);
 	text-transform: uppercase;
-	letter-spacing: 0.05em;
-	text-shadow: 0 0 8px var(--accent-glow);
+	letter-spacing: 0.14em;
+	margin-top: 2px;
+	opacity: 0.85;
 }
 
 .card-path {
-	font-size: 0.72rem;
-	color: var(--text-secondary);
+	font-family: var(--font-display);
+	font-size: 0.7rem;
+	color: var(--ink-soft);
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
 }
 
 .locked-path {
-	margin-top: 2px;
+	margin-top: 6px;
+	color: color-mix(in oklch, var(--ink-dim) 80%, var(--pane-color));
 }
 
 .card-lore {
-	font-size: 0.75rem;
-	color: var(--text-primary);
-	line-height: 1.5;
+	font-family: var(--font-body);
+	font-size: 0.82rem;
+	color: var(--ink-bright);
+	line-height: 1.55;
 	flex: 1;
-}
-
-.card-discoverer {
-	font-size: 0.7rem;
-	color: var(--text-secondary);
-	margin-top: auto;
-	padding-top: 6px;
-	border-top: 1px solid var(--border-color);
-}
-
-.card-discoverer strong {
-	color: var(--gold);
+	margin-top: 4px;
 }
 
 .card-date {
-	opacity: 0.7;
+	font-family: var(--font-display);
+	font-size: 0.68rem;
+	color: var(--ink-soft);
+	letter-spacing: 0.06em;
+	margin-top: auto;
+	align-self: flex-end;
+	opacity: 0.75;
 }
 
-/* ── Mobile: 2-column layout ─────────────────────────────────────────── */
+/* ── Mobile: 2-column lancet form ────────────────────────────────────── */
 @media (max-width: 599px) {
 	.app {
-		padding: 1.25rem 0.875rem 2.5rem;
+		padding: 1.75rem 0.875rem 2.5rem;
 	}
 
 	header {
-		margin-bottom: 1.25rem;
+		margin-bottom: 1.5rem;
 	}
 
 	header h1 {
-		font-size: 1.5rem;
-		letter-spacing: 0.04em;
+		font-size: 1.35rem;
+		letter-spacing: 0.14em;
 	}
 
 	.subtitle {
-		font-size: 0.85rem;
+		font-size: 0.8rem;
+	}
+
+	.intro {
+		font-size: 0.875rem;
+		margin-top: 1rem;
 	}
 
 	.grid {
 		grid-template-columns: repeat(2, 1fr);
-		gap: 8px;
 	}
 
 	.combo-card {
-		min-height: 120px;
-		padding: 10px;
-		gap: 5px;
+		min-height: 150px;
+		padding: 12px 12px 10px;
 	}
 
-	.combo-card:active {
-		box-shadow: 0 0 14px var(--accent-glow);
-		border-color: var(--accent-secondary);
+	.card-glyph {
+		width: 2rem;
+		height: 2rem;
 	}
 
-	.card-lock {
-		width: 1.6rem;
-		height: 1.6rem;
+	.card-discoverer-name {
+		font-size: 1.05rem;
 	}
 
 	.card-name {
-		font-size: 0.8rem;
+		font-size: 0.72rem;
 	}
 
 	.card-path {
-		font-size: 0.7rem;
+		font-size: 0.65rem;
 	}
 
 	.card-lore {
-		font-size: 0.73rem;
+		font-size: 0.78rem;
 	}
 
-	.card-discoverer {
-		font-size: 0.67rem;
+	.card-date {
+		font-size: 0.65rem;
 	}
 }
