@@ -160,7 +160,7 @@ header h1 {
 }
 
 .combo-card.locked {
-	background: color-mix(in oklch, var(--leading) 82%, var(--pane-color));
+	background: color-mix(in oklab, var(--leading) 82%, var(--pane-color));
 	align-items: center;
 	justify-content: center;
 }
@@ -194,7 +194,7 @@ header h1 {
 
 @keyframes pane-illuminate {
 	0% {
-		background: color-mix(in oklch, var(--leading) 92%, var(--pane-color));
+		background: color-mix(in oklab, var(--leading) 92%, var(--pane-color));
 		filter: brightness(0.45) saturate(0.4);
 	}
 	35% {
@@ -227,7 +227,7 @@ header h1 {
 .card-glyph {
 	width: 2.4rem;
 	height: 2.4rem;
-	color: color-mix(in oklch, var(--leading) 60%, var(--pane-color));
+	color: color-mix(in oklab, var(--leading) 60%, var(--pane-color));
 }
 
 /* ── Lit-pane content ───────────────────────────────────────────────── */
@@ -263,7 +263,7 @@ header h1 {
 
 .locked-path {
 	margin-top: 8px;
-	color: color-mix(in oklch, var(--ink-dim) 80%, var(--pane-color));
+	color: color-mix(in oklab, var(--ink-dim) 80%, var(--pane-color));
 }
 
 .card-lore {
