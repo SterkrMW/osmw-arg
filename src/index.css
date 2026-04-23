@@ -1,39 +1,43 @@
 :root {
 	/* ── Cathedral structure ─────────────────────────────────────────────── */
-	--backdrop: oklch(0.06 0.008 25);
-	--leading: oklch(0.10 0.01 280);
-	--leading-soft: oklch(0.14 0.012 280);
+	--backdrop: oklch(0.06 0.008 40);
+	--leading: oklch(0.10 0.006 55);
+	--leading-soft: oklch(0.14 0.008 55);
 	--leading-width: 3px;
 
 	/* ── Inscription palette ─────────────────────────────────────────────── */
 	--ink-bright: oklch(0.94 0.018 80);
-	--ink-soft: oklch(0.78 0.025 80);
-	--ink-dim: oklch(0.55 0.03 80);
+	--ink-soft: oklch(0.82 0.025 80);
+	--ink-dim: oklch(0.65 0.03 80);
 
 	/* ── Pane palette — keyed by destination race (tier2) ───────────────── */
-	/* Tier2 = 0 — Human destination — amber/gold family */
-	--pane-0_0: oklch(0.55 0.16 65);
-	--pane-1_0: oklch(0.50 0.14 50);
-	--pane-2_0: oklch(0.58 0.16 80);
-	--pane-3_0: oklch(0.48 0.13 35);
+	/* All panes in L 0.36–0.44 band so ivory-bright (L 0.94) ink clears
+	   WCAG AA 4.5:1 for 16px body. Family identity carried by hue, not
+	   lightness — at dusk, all glass darkens similarly. */
 
-	/* Tier2 = 1 — Centaur destination — green family */
-	--pane-0_1: oklch(0.50 0.13 145);
-	--pane-1_1: oklch(0.55 0.14 155);
-	--pane-2_1: oklch(0.45 0.12 130);
-	--pane-3_1: oklch(0.42 0.14 165);
+	/* Tier2 = 0 — Human destination — honey/amber family */
+	--pane-0_0: oklch(0.42 0.13 68);    /* pale honey   — unbroken covenant */
+	--pane-1_0: oklch(0.40 0.13 48);    /* deep ember   — wandering soul */
+	--pane-2_0: oklch(0.42 0.12 82);    /* muted topaz  — descending star */
+	--pane-3_0: oklch(0.40 0.12 38);    /* rust         — reclaimed */
 
-	/* Tier2 = 2 — Mage destination — cobalt family */
-	--pane-0_2: oklch(0.45 0.16 250);
-	--pane-1_2: oklch(0.40 0.15 265);
-	--pane-2_2: oklch(0.48 0.15 240);
-	--pane-3_2: oklch(0.36 0.14 270);
+	/* Tier2 = 1 — Centaur destination — forest/moss family */
+	--pane-0_1: oklch(0.42 0.12 158);   /* jade shadow  — wandering soul */
+	--pane-1_1: oklch(0.44 0.13 148);   /* moss green   — endless gallop */
+	--pane-2_1: oklch(0.40 0.11 135);   /* deep olive   — wind-weaver */
+	--pane-3_1: oklch(0.42 0.12 168);   /* viridian     — unfettered circuit */
 
-	/* Tier2 = 3 — Borg destination — violet family */
-	--pane-0_3: oklch(0.42 0.16 320);
-	--pane-1_3: oklch(0.40 0.15 340);
-	--pane-2_3: oklch(0.45 0.16 305);
-	--pane-3_3: oklch(0.36 0.15 295);
+	/* Tier2 = 2 — Mage destination — midnight/cobalt family */
+	--pane-0_2: oklch(0.40 0.14 250);   /* sapphire     — awakened mind */
+	--pane-1_2: oklch(0.38 0.13 265);   /* indigo       — storm caller */
+	--pane-2_2: oklch(0.42 0.14 240);   /* cobalt heart — endless theorem */
+	--pane-3_2: oklch(0.38 0.13 272);   /* deep slate   — cognisant flame */
+
+	/* Tier2 = 3 — Borg destination — plum/violet family */
+	--pane-0_3: oklch(0.38 0.13 318);   /* amethyst     — iron resolve */
+	--pane-1_3: oklch(0.40 0.13 338);   /* mulberry     — engine of war */
+	--pane-2_3: oklch(0.40 0.14 305);   /* magenta-violet — calculated annihilation */
+	--pane-3_3: oklch(0.36 0.12 295);   /* plum-black   — absolute protocol */
 
 	/* ── Typography ──────────────────────────────────────────────────────── */
 	--font-display: 'IM Fell English SC', ui-serif, Georgia, 'Times New Roman', serif;
@@ -156,7 +160,7 @@ header h1 {
 }
 
 .combo-card.locked {
-	background: color-mix(in oklch, var(--leading) 88%, var(--pane-color));
+	background: color-mix(in oklch, var(--leading) 82%, var(--pane-color));
 	align-items: center;
 	justify-content: center;
 }
@@ -223,7 +227,7 @@ header h1 {
 .card-glyph {
 	width: 2.4rem;
 	height: 2.4rem;
-	color: color-mix(in oklch, var(--leading) 65%, var(--pane-color));
+	color: color-mix(in oklch, var(--leading) 60%, var(--pane-color));
 }
 
 /* ── Lit-pane content ───────────────────────────────────────────────── */
