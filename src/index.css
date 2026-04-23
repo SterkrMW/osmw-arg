@@ -35,9 +35,21 @@
 	--pane-2_3: oklch(0.45 0.16 305);
 	--pane-3_3: oklch(0.36 0.15 295);
 
-	/* ── Typography (placeholders — /typeset will replace) ──────────────── */
-	--font-display: ui-serif, Georgia, 'Times New Roman', serif;
-	--font-body: ui-serif, Georgia, 'Times New Roman', serif;
+	/* ── Typography ──────────────────────────────────────────────────────── */
+	--font-display: 'IM Fell English SC', ui-serif, Georgia, 'Times New Roman', serif;
+	--font-body: 'IM Fell English', ui-serif, Georgia, 'Times New Roman', serif;
+
+	/* Type scale (1.25 ratio, fixed rem — app UI) */
+	--text-2xs: 0.75rem;    /* 12px — smallest marks */
+	--text-xs: 0.8125rem;   /* 13px — labels, date */
+	--text-sm: 0.875rem;    /* 14px — subtitle, combo name */
+	--text-base: 1rem;      /* 16px — lore body, intro */
+	--text-lg: 1.5rem;      /* 24px — H1, discoverer name */
+
+	/* Line heights */
+	--lh-tight: 1.15;
+	--lh-snug: 1.35;
+	--lh-body: 1.65;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,6 +59,11 @@ body {
 	color: var(--ink-soft);
 	min-height: 100vh;
 	background: var(--backdrop);
+	font-kerning: normal;
+	font-variant-ligatures: common-ligatures;
+	font-variant-numeric: oldstyle-nums;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 /* ── App container ───────────────────────────────────────────────────── */
@@ -65,18 +82,19 @@ header {
 
 header h1 {
 	font-family: var(--font-display);
-	font-size: 1.75rem;
-	font-weight: 500;
+	font-size: var(--text-lg);
+	font-weight: 400;
 	color: var(--ink-bright);
-	letter-spacing: 0.18em;
-	text-transform: uppercase;
+	text-transform: lowercase;
+	letter-spacing: 0.14em;
+	line-height: var(--lh-snug);
 }
 
 .subtitle {
-	margin-top: 0.75rem;
+	margin-top: 0.875rem;
 	color: var(--ink-dim);
-	font-size: 0.875rem;
-	letter-spacing: 0.04em;
+	font-size: var(--text-sm);
+	letter-spacing: 0.02em;
 }
 
 .subtitle-error {
@@ -105,10 +123,11 @@ header h1 {
 
 .intro {
 	margin: 1.5rem auto 0;
-	max-width: 38rem;
+	max-width: 36rem;
 	color: var(--ink-soft);
-	font-size: 0.95rem;
-	line-height: 1.7;
+	font-size: var(--text-base);
+	line-height: var(--lh-body);
+	font-variant-ligatures: common-ligatures historical-ligatures;
 }
 
 /* ── Window armature ─────────────────────────────────────────────────── */
@@ -127,8 +146,8 @@ header h1 {
 /* ── Panes ───────────────────────────────────────────────────────────── */
 .combo-card {
 	position: relative;
-	padding: 14px 14px 12px;
-	min-height: 160px;
+	padding: 16px 16px 12px;
+	min-height: 200px;
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
@@ -209,55 +228,58 @@ header h1 {
 
 /* ── Lit-pane content ───────────────────────────────────────────────── */
 .card-discoverer-name {
-	font-family: var(--font-display);
-	font-size: 1.15rem;
-	font-weight: 600;
+	font-family: var(--font-body);
+	font-style: italic;
+	font-size: var(--text-lg);
+	font-weight: 400;
 	color: var(--ink-bright);
-	letter-spacing: 0.04em;
-	line-height: 1.2;
+	line-height: var(--lh-tight);
 }
 
 .card-name {
 	font-family: var(--font-display);
-	font-size: 0.78rem;
-	font-weight: 500;
+	font-size: var(--text-sm);
+	font-weight: 400;
 	color: var(--ink-bright);
-	text-transform: uppercase;
-	letter-spacing: 0.14em;
-	margin-top: 2px;
+	text-transform: lowercase;
+	letter-spacing: 0.16em;
+	line-height: var(--lh-snug);
+	margin-top: 4px;
 	opacity: 0.85;
 }
 
 .card-path {
 	font-family: var(--font-display);
-	font-size: 0.7rem;
+	font-size: var(--text-xs);
 	color: var(--ink-soft);
-	letter-spacing: 0.08em;
-	text-transform: uppercase;
+	text-transform: lowercase;
+	letter-spacing: 0.14em;
+	line-height: var(--lh-snug);
 }
 
 .locked-path {
-	margin-top: 6px;
+	margin-top: 8px;
 	color: color-mix(in oklch, var(--ink-dim) 80%, var(--pane-color));
 }
 
 .card-lore {
 	font-family: var(--font-body);
-	font-size: 0.82rem;
+	font-size: var(--text-base);
 	color: var(--ink-bright);
-	line-height: 1.55;
+	line-height: var(--lh-body);
 	flex: 1;
-	margin-top: 4px;
+	margin-top: 6px;
+	font-variant-ligatures: common-ligatures historical-ligatures;
 }
 
 .card-date {
-	font-family: var(--font-display);
-	font-size: 0.68rem;
+	font-family: var(--font-body);
+	font-style: italic;
+	font-size: var(--text-xs);
 	color: var(--ink-soft);
-	letter-spacing: 0.06em;
 	margin-top: auto;
 	align-self: flex-end;
-	opacity: 0.75;
+	opacity: 0.8;
 }
 
 /* ── Mobile: 2-column lancet form ────────────────────────────────────── */
@@ -271,17 +293,12 @@ header h1 {
 	}
 
 	header h1 {
-		font-size: 1.35rem;
-		letter-spacing: 0.14em;
-	}
-
-	.subtitle {
-		font-size: 0.8rem;
+		font-size: 1.25rem;
+		letter-spacing: 0.12em;
 	}
 
 	.intro {
-		font-size: 0.875rem;
-		margin-top: 1rem;
+		margin-top: 1.125rem;
 	}
 
 	.grid {
@@ -289,8 +306,8 @@ header h1 {
 	}
 
 	.combo-card {
-		min-height: 150px;
-		padding: 12px 12px 10px;
+		min-height: 190px;
+		padding: 14px 14px 10px;
 	}
 
 	.card-glyph {
@@ -299,22 +316,6 @@ header h1 {
 	}
 
 	.card-discoverer-name {
-		font-size: 1.05rem;
-	}
-
-	.card-name {
-		font-size: 0.72rem;
-	}
-
-	.card-path {
-		font-size: 0.65rem;
-	}
-
-	.card-lore {
-		font-size: 0.78rem;
-	}
-
-	.card-date {
-		font-size: 0.65rem;
+		font-size: 1.25rem;
 	}
 }
