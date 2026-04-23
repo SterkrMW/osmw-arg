@@ -1,2 +1,5 @@
 /node_modules
 .env.development.local
+
+.vercel
+.env*.local
