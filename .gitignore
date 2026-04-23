@@ -3,3 +3,6 @@
 
 .vercel
 .env*.local
+/.agents
+/.claude/skills
+skills-lock.json
