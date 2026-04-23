@@ -135,7 +135,55 @@ header h1 {
 }
 
 /* ── Window armature ─────────────────────────────────────────────────── */
+.grid-frame {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-template-rows: auto 1fr;
+	column-gap: 0.875rem;
+	row-gap: 0.625rem;
+}
+
+.axis-headers {
+	display: grid;
+	gap: var(--leading-width);
+}
+
+.axis-headers > span {
+	font-family: var(--font-display);
+	font-size: var(--text-xs);
+	color: var(--ink-dim);
+	text-transform: lowercase;
+	letter-spacing: 0.22em;
+	display: flex;
+	align-items: center;
+	line-height: 1;
+}
+
+.axis-headers-top {
+	grid-column: 2;
+	grid-row: 1;
+	grid-template-columns: repeat(4, 1fr);
+	padding: 0 var(--leading-width);
+}
+
+.axis-headers-top > span {
+	justify-content: center;
+}
+
+.axis-headers-left {
+	grid-column: 1;
+	grid-row: 2;
+	grid-template-rows: repeat(4, 1fr);
+	padding: var(--leading-width) 0;
+}
+
+.axis-headers-left > span {
+	justify-content: flex-end;
+}
+
 .grid-wrapper {
+	grid-column: 2;
+	grid-row: 2;
 	background: var(--leading);
 	padding: var(--leading-width);
 	position: relative;
@@ -145,6 +193,11 @@ header h1 {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
 	gap: var(--leading-width);
+}
+
+/* Desktop: axis labels carry the path info; per-card path is redundant. */
+.card-path {
+	display: none;
 }
 
 /* ── Panes ───────────────────────────────────────────────────────────── */
@@ -305,8 +358,26 @@ header h1 {
 		margin-top: 1.125rem;
 	}
 
+	.grid-frame {
+		grid-template-columns: 1fr;
+		grid-template-rows: 1fr;
+	}
+
+	.axis-headers {
+		display: none;
+	}
+
+	.grid-wrapper {
+		grid-column: 1;
+		grid-row: 1;
+	}
+
 	.grid {
 		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.card-path {
+		display: block;
 	}
 
 	.combo-card {
