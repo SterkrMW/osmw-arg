@@ -1,127 +1,162 @@
 :root {
-	/* ── Cathedral structure ─────────────────────────────────────────────── */
-	--backdrop: oklch(0.06 0.008 40);
-	--leading: oklch(0.10 0.006 55);
-	--leading-width: 3px;
-	--frame-width: 14px;
-	/* Antique gilding — outer band catches light, inner band falls into shadow */
-	--frame-light: oklch(0.58 0.12 78);
-	--frame-shadow: oklch(0.42 0.09 70);
-	--frame-shadow-width: 4px;
+	/* ── Parchment palette (mirrors mainsite.css) ─────────────────────────── */
+	--parchment: #f6ead0;
+	--parchment-shade: #e9d9a8;
+	--parchment-deep: #d4bf83;
+	--ink: #4a3820;
+	--ink-soft: #735538;
+	--ink-mute: #a68b5b;
 
-	/* ── Inscription palette ─────────────────────────────────────────────── */
-	--ink-bright: oklch(0.94 0.018 80);
-	--ink-soft: oklch(0.82 0.025 80);
-	--ink-dim: oklch(0.65 0.03 80);
+	--wood-light: #c08a4e;
+	--wood-mid: #8a5a2b;
+	--wood-dark: #523216;
+	--wood-edge: #2f1a07;
+	--gold: #e7b94a;
+	--gold-deep: #a9771f;
 
-	/* ── Pane palette — keyed by destination race (tier2) ───────────────── */
-	/* All panes in L 0.36–0.44 band so ivory-bright (L 0.94) ink clears
-	   WCAG AA 4.5:1 for 16px body. Family identity carried by hue, not
-	   lightness — at dusk, all glass darkens similarly. */
+	--accent: #e46a6a;
+	--accent-ok: #4aa269;
 
-	/* Tier2 = 0 — Human destination — honey/amber family */
-	--pane-0_0: oklch(0.42 0.13 68);    /* pale honey   — unbroken covenant */
-	--pane-1_0: oklch(0.40 0.13 48);    /* deep ember   — wandering soul */
-	--pane-2_0: oklch(0.42 0.12 82);    /* muted topaz  — descending star */
-	--pane-3_0: oklch(0.40 0.12 38);    /* rust         — reclaimed */
+	/* ── Pane palette — keyed by destination race (tier2) ─────────────────
+	   Warm, parchment-friendly inks/wax tones that read clearly when used
+	   as a top accent strip and a tinted parchment wash. */
 
-	/* Tier2 = 1 — Centaur destination — forest/moss family */
-	--pane-0_1: oklch(0.42 0.12 158);   /* jade shadow  — wandering soul */
-	--pane-1_1: oklch(0.44 0.13 148);   /* moss green   — endless gallop */
-	--pane-2_1: oklch(0.40 0.11 135);   /* deep olive   — wind-weaver */
-	--pane-3_1: oklch(0.42 0.12 168);   /* viridian     — unfettered circuit */
+	/* Tier2 = 0 — Human → honey/amber */
+	--pane-0_0: #e7b94a;
+	--pane-1_0: #d97a2b;
+	--pane-2_0: #f0c95c;
+	--pane-3_0: #c25a2c;
 
-	/* Tier2 = 2 — Mage destination — midnight/cobalt family */
-	--pane-0_2: oklch(0.40 0.14 250);   /* sapphire     — awakened mind */
-	--pane-1_2: oklch(0.38 0.13 265);   /* indigo       — storm caller */
-	--pane-2_2: oklch(0.42 0.14 240);   /* cobalt heart — endless theorem */
-	--pane-3_2: oklch(0.38 0.13 272);   /* deep slate   — cognisant flame */
+	/* Tier2 = 1 — Centaur → forest/moss */
+	--pane-0_1: #6ba844;
+	--pane-1_1: #5a8a3d;
+	--pane-2_1: #4a7a30;
+	--pane-3_1: #7fb84e;
 
-	/* Tier2 = 3 — Borg destination — plum/violet family */
-	--pane-0_3: oklch(0.38 0.13 318);   /* amethyst     — iron resolve */
-	--pane-1_3: oklch(0.40 0.13 338);   /* mulberry     — engine of war */
-	--pane-2_3: oklch(0.40 0.14 305);   /* magenta-violet — calculated annihilation */
-	--pane-3_3: oklch(0.36 0.12 295);   /* plum-black   — absolute protocol */
+	/* Tier2 = 2 — Mage → midnight/cobalt */
+	--pane-0_2: #4661c4;
+	--pane-1_2: #3a4ea8;
+	--pane-2_2: #5470d2;
+	--pane-3_2: #2e3d92;
 
-	/* ── Typography ──────────────────────────────────────────────────────── */
-	--font-display: 'IM Fell English SC', ui-serif, Georgia, 'Times New Roman', serif;
-	--font-body: 'IM Fell English', ui-serif, Georgia, 'Times New Roman', serif;
+	/* Tier2 = 3 — Borg → sealing-wax plum */
+	--pane-0_3: #8a3f6e;
+	--pane-1_3: #a14a7c;
+	--pane-2_3: #6a2e58;
+	--pane-3_3: #b45a8c;
 
-	/* Type scale (1.25 ratio, fixed rem — app UI) */
-	--text-xs: 0.8125rem;   /* 13px — labels, date */
-	--text-sm: 0.875rem;    /* 14px — subtitle, combo name */
-	--text-base: 1rem;      /* 16px — lore body, intro */
-	--text-lg: 1.5rem;      /* 24px — H1, discoverer name */
+	/* ── Typography ───────────────────────────────────────────────────────── */
+	--font-display: 'Cormorant Garamond', ui-serif, Georgia, 'Times New Roman', serif;
+	--font-mono: 'VT323', ui-monospace, monospace;
+	--font-body: 'Nunito', system-ui, -apple-system, Segoe UI, sans-serif;
 
-	/* Line heights */
+	/* Type scale */
+	--text-xs: 0.8125rem;
+	--text-sm: 0.875rem;
+	--text-base: 1rem;
+	--text-lg: 1.5rem;
+
 	--lh-tight: 1.15;
 	--lh-snug: 1.35;
-	--lh-body: 1.65;
+	--lh-body: 1.55;
+
+	/* Frame metrics — kept for axis-header alignment with the wood frame */
+	--frame-pad: 22px;
+	--leading-width: 8px;
+
+	/* Brass stud — inline SVG so we get true circular clipping + an offset
+	   highlight that radial-gradient alone can't deliver in CSS. Matches
+	   mainsite's `.stud` gradient: amber dome shaded toward bottom-right. */
+	--stud-img: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 18 18'><defs><radialGradient id='g' cx='0.3' cy='0.3' r='1'><stop offset='0' stop-color='%23ffdca8'/><stop offset='0.5' stop-color='%23d69a2a'/><stop offset='1' stop-color='%237a4d10'/></radialGradient></defs><circle cx='9' cy='9' r='9' fill='url(%23g)'/></svg>");
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: hidden; max-width: 100%; }
 
 body {
 	font-family: var(--font-body);
-	color: var(--ink-soft);
+	color: var(--ink);
 	min-height: 100vh;
-	background-color: var(--backdrop);
-	background-image:
-		linear-gradient(oklch(0.06 0.008 40 / 0.78), oklch(0.06 0.008 40 / 0.78)),
-		url('./bgsmall.webp');
-	background-repeat: no-repeat, repeat;
+	background-color: #2e4a3a;
 	font-kerning: normal;
 	font-variant-ligatures: common-ligatures;
-	font-variant-numeric: oldstyle-nums;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-/* ── App container ───────────────────────────────────────────────────── */
+/* ── Background scene (mirrors mainsite .scene) ──────────────────────────── */
+body::before {
+	content: "";
+	position: fixed; inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		linear-gradient(180deg, rgba(180, 220, 230, 0) 0%, rgba(180, 220, 230, 0) 55%, rgba(40, 60, 30, 0.25) 100%),
+		url('../bg-main.webp') center 20% / cover no-repeat,
+		#2e4a3a;
+}
+
+body::after {
+	content: "";
+	position: fixed; inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		radial-gradient(ellipse 60% 50% at 70% 55%, rgba(0, 0, 0, 0.22), transparent 70%),
+		radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255, 240, 180, 0.18), transparent 60%);
+}
+
+/* ── App container ───────────────────────────────────────────────────────── */
 .app {
+	position: relative;
+	z-index: 1;
 	max-width: 1100px;
 	margin: 0 auto;
-	padding: 3.5rem 1.5rem 4rem;
-	position: relative;
+	padding: 56px 44px 80px;
 	animation: app-enter 400ms ease-out both;
 }
 
 @keyframes app-enter {
 	from { opacity: 0; }
-	to   { opacity: 1; }
+	to { opacity: 1; }
 }
 
-/* ── Header ──────────────────────────────────────────────────────────── */
+/* ── Header ──────────────────────────────────────────────────────────────── */
 header {
 	text-align: center;
 	margin-bottom: 2.5rem;
+	color: #fffaec;
 }
 
 header h1 {
 	font-family: var(--font-display);
-	font-size: var(--text-lg);
-	font-weight: 400;
-	color: var(--ink-bright);
-	text-transform: lowercase;
-	letter-spacing: 0.14em;
-	line-height: var(--lh-snug);
+	font-style: italic;
+	font-weight: 700;
+	font-size: clamp(40px, 5.4vw, 64px);
+	line-height: 0.98;
+	letter-spacing: -0.005em;
+	color: #fffaec;
+	text-shadow: 0 3px 14px rgba(0, 0, 0, 0.6), 0 1px 2px rgba(0, 0, 0, 0.6);
+	text-wrap: balance;
 }
 
 .subtitle {
-	margin-top: 0.875rem;
-	color: var(--ink-dim);
-	font-size: var(--text-sm);
-	letter-spacing: 0.02em;
+	margin-top: 14px;
+	font-family: var(--font-mono);
+	font-size: 17px;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: #e8d9a8;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
-.subtitle-error {
-	color: var(--ink-soft);
-}
+.subtitle-error { color: #ffd9c8; }
 
 .subtitle-meta {
+	color: #c5b48a;
+	letter-spacing: 0.08em;
+	text-transform: none;
 	font-style: italic;
-	color: var(--ink-dim);
-	letter-spacing: 0;
 }
 
 .retry-button {
@@ -130,30 +165,33 @@ header h1 {
 	padding: 0;
 	margin: 0;
 	font: inherit;
-	color: var(--ink-bright);
+	color: var(--gold);
 	cursor: pointer;
 	text-decoration: underline;
+	text-decoration-style: dotted;
 	text-underline-offset: 3px;
 	text-decoration-thickness: 1px;
 }
 
 .retry-button:hover,
 .retry-button:focus-visible {
-	color: var(--ink-bright);
+	color: #fff4c4;
 	text-decoration-thickness: 2px;
 	outline: none;
 }
 
 .intro {
-	margin: 1.5rem auto 0;
+	margin: 22px auto 0;
 	max-width: 36rem;
-	color: var(--ink-soft);
+	font-family: var(--font-body);
 	font-size: var(--text-base);
 	line-height: var(--lh-body);
-	font-variant-ligatures: common-ligatures historical-ligatures;
+	color: #ebe0c4;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+	text-wrap: pretty;
 }
 
-/* ── Window armature ─────────────────────────────────────────────────── */
+/* ── Window armature ─────────────────────────────────────────────────────── */
 .grid-frame {
 	display: grid;
 	grid-template-columns: auto 1fr;
@@ -168,96 +206,176 @@ header h1 {
 }
 
 .axis-headers > span {
-	font-family: var(--font-display);
-	font-size: var(--text-xs);
-	color: var(--ink-dim);
-	text-transform: lowercase;
+	font-family: var(--font-mono);
+	font-size: 15px;
+	color: #e8d9a8;
+	text-transform: uppercase;
 	letter-spacing: 0.22em;
 	display: flex;
 	align-items: center;
 	line-height: 1;
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
 }
 
 .axis-headers-top {
 	grid-column: 2;
 	grid-row: 1;
 	grid-template-columns: repeat(4, 1fr);
-	padding: 0 var(--frame-width);
+	padding: 0 calc(var(--frame-pad) + 16px);
 }
 
-.axis-headers-top > span {
-	justify-content: center;
-}
+.axis-headers-top > span { justify-content: center; }
 
 .axis-headers-left {
 	grid-column: 1;
 	grid-row: 2;
 	grid-template-rows: repeat(4, 1fr);
-	padding: var(--frame-width) 0;
+	padding: calc(var(--frame-pad) + 16px) 0;
 }
 
-.axis-headers-left > span {
-	justify-content: flex-end;
-}
+.axis-headers-left > span { justify-content: flex-end; }
 
+/* ── Wood-framed scroll (replaces the leading-frame inset) ───────────────── */
 .grid-wrapper {
 	grid-column: 2;
 	grid-row: 2;
-	background: transparent;
-	padding: var(--frame-width);
 	position: relative;
+	padding: var(--frame-pad);
+	border-radius: 18px;
+	background:
+		repeating-linear-gradient(92deg, rgba(0, 0, 0, 0.05) 0 2px, transparent 2px 14px),
+		linear-gradient(165deg, var(--wood-light) 0%, var(--wood-mid) 50%, var(--wood-dark) 100%);
 	box-shadow:
-		inset 0 0 0 var(--frame-shadow-width) var(--frame-shadow),
-		inset 0 0 0 var(--frame-width) var(--frame-light);
+		inset 0 0 0 2px var(--wood-edge),
+		inset 0 2px 0 rgba(255, 255, 255, 0.25),
+		inset 0 -4px 0 rgba(0, 0, 0, 0.35),
+		0 22px 48px -18px rgba(50, 30, 10, 0.55),
+		0 8px 20px rgba(50, 30, 10, 0.25);
 }
 
+/* Brass corner studs — uses ::after so it paints above .grid-inner in tree
+   order. Same SVG image stamped at all four corners. */
+.grid-wrapper::after {
+	content: "";
+	position: absolute; inset: 0;
+	border-radius: 18px;
+	pointer-events: none;
+	background-image: var(--stud-img), var(--stud-img), var(--stud-img), var(--stud-img);
+	background-position:
+		top 10px left 10px,
+		top 10px right 10px,
+		bottom 10px left 10px,
+		bottom 10px right 10px;
+	background-repeat: no-repeat;
+	background-size: 18px 18px;
+	filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+/* ── Parchment surface ───────────────────────────────────────────────────── */
 .grid-inner {
-	background: color-mix(in oklab, var(--leading) 55%, transparent);
+	position: relative;
+	padding: 16px;
+	border-radius: 10px;
+	background:
+		radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.55), transparent 50%),
+		radial-gradient(ellipse at 100% 100%, rgba(180, 140, 70, 0.18), transparent 50%),
+		linear-gradient(180deg, #fbf1d5 0%, #f1e0b0 100%);
+	box-shadow:
+		inset 0 0 0 1px rgba(90, 60, 20, 0.18),
+		inset 0 0 40px rgba(180, 140, 70, 0.18),
+		0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+/* Subtle paper speckle (matches mainsite .parchment::before) */
+.grid-inner::before {
+	content: "";
+	position: absolute; inset: 0;
+	border-radius: 10px;
+	pointer-events: none;
+	background-image:
+		radial-gradient(rgba(120, 80, 30, 0.10) 1px, transparent 1.6px),
+		radial-gradient(rgba(120, 80, 30, 0.06) 1px, transparent 1.6px);
+	background-size: 22px 22px, 9px 9px;
+	background-position: 0 0, 5px 7px;
+	opacity: 0.6;
+	mix-blend-mode: multiply;
 }
 
 .grid {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	gap: var(--leading-width);
+	gap: 10px;
+	position: relative;
+	z-index: 1;
 }
 
 /* Desktop: axis labels carry the path info; per-card path is redundant. */
-.card-path {
-	display: none;
-}
+.card-path { display: none; }
 
-/* ── Panes ───────────────────────────────────────────────────────────── */
+/* ── Panes (illuminated entries on parchment) ────────────────────────────── */
 .combo-card {
 	position: relative;
-	padding: 16px 16px 12px;
+	padding: 18px 16px 14px;
 	min-height: 200px;
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	transition: filter 0.3s ease;
+	border-radius: 6px;
+	background:
+		radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.45), transparent 55%),
+		linear-gradient(180deg, #fbf1d5 0%, #f1e0b0 100%);
+	box-shadow:
+		inset 0 0 0 1px rgba(90, 60, 20, 0.18),
+		inset 0 0 24px rgba(180, 140, 70, 0.14),
+		0 1px 0 rgba(255, 255, 255, 0.6),
+		0 2px 6px rgba(50, 30, 10, 0.15);
+	overflow: hidden;
+	transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.2s ease;
 }
 
+/* Race-color accent strip (top edge — the destination race "ink") */
+.combo-card::before {
+	content: "";
+	position: absolute; top: 0; left: 0; right: 0;
+	height: 5px;
+	background: var(--pane-color);
+	box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.18);
+}
+
+/* Locked: aged parchment with diagonal hatch + dimmed accent */
 .combo-card.locked {
-	background: color-mix(
-		in oklab,
-		color-mix(in oklab, var(--leading) 82%, var(--pane-color)) 78%,
-		transparent
-	);
+	background:
+		repeating-linear-gradient(135deg,
+			rgba(120, 80, 30, 0.05) 0 6px, transparent 6px 12px),
+		linear-gradient(180deg, #f5e8c0 0%, #e9d9a8 100%);
 	align-items: center;
 	justify-content: center;
 }
 
+.combo-card.locked::before {
+	opacity: 0.4;
+}
+
+/* Unlocked: race-tinted parchment wash, hover lifts the page */
 .combo-card.unlocked {
-	background: color-mix(in oklab, var(--pane-color) 82%, transparent);
+	background:
+		radial-gradient(ellipse at 20% 0%, rgba(255, 255, 255, 0.5), transparent 55%),
+		linear-gradient(180deg,
+			color-mix(in oklab, var(--pane-color) 6%, #fbf1d5) 0%,
+			color-mix(in oklab, var(--pane-color) 10%, #f1e0b0) 100%);
 }
 
-.combo-card:hover {
-	filter: brightness(1.08);
+.combo-card.unlocked:hover {
+	transform: translateY(-2px);
+	filter: brightness(1.03);
+	box-shadow:
+		inset 0 0 0 1px rgba(90, 60, 20, 0.22),
+		inset 0 0 24px rgba(180, 140, 70, 0.16),
+		0 6px 18px rgba(50, 30, 10, 0.28),
+		0 0 0 2px color-mix(in oklab, var(--pane-color) 55%, transparent);
 }
 
-/* Reserved hook for the live-unlock sequence (wired up post-/bolder).
-   Trigger by adding `.is-illuminating` to a pane when the diff detects a
-   newly-lit combo. */
+/* Live-unlock sequence: flash like a wax seal pressing down, then ink dries */
 .combo-card.is-illuminating {
 	animation: pane-illuminate 2.4s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -272,21 +390,29 @@ header h1 {
 
 @keyframes pane-illuminate {
 	0% {
-		background: color-mix(in oklab, var(--leading) 92%, var(--pane-color));
-		filter: brightness(0.45) saturate(0.4);
+		filter: brightness(1.25) saturate(0.7);
+		box-shadow:
+			inset 0 0 0 1px rgba(90, 60, 20, 0.22),
+			inset 0 0 24px rgba(255, 240, 180, 0.4),
+			0 0 28px var(--pane-color),
+			0 0 0 5px color-mix(in oklab, var(--pane-color) 60%, transparent);
 	}
-	35% {
-		filter: brightness(0.7) saturate(0.7);
+	60% {
+		filter: brightness(1.08) saturate(0.95);
 	}
 	100% {
-		background: color-mix(in oklab, var(--pane-color) 82%, transparent);
 		filter: brightness(1) saturate(1);
+		box-shadow:
+			inset 0 0 0 1px rgba(90, 60, 20, 0.18),
+			inset 0 0 24px rgba(180, 140, 70, 0.14),
+			0 1px 0 rgba(255, 255, 255, 0.6),
+			0 2px 6px rgba(50, 30, 10, 0.15);
 	}
 }
 
 @keyframes ink-dries {
 	from { opacity: 0; }
-	to   { opacity: 1; }
+	to { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -302,80 +428,80 @@ header h1 {
 	.combo-card { transition: none; }
 }
 
-/* ── Locked-pane glyph ──────────────────────────────────────────────── */
+/* ── Locked-pane glyph (faded wax stamp) ─────────────────────────────────── */
 .card-glyph {
 	width: 2.4rem;
 	height: 2.4rem;
-	color: color-mix(in oklab, var(--leading) 60%, var(--pane-color));
+	color: color-mix(in oklab, var(--ink-mute) 55%, var(--pane-color));
+	opacity: 0.6;
+	filter: drop-shadow(0 1px 0 rgba(255, 250, 235, 0.5));
 }
 
-/* ── Lit-pane content ───────────────────────────────────────────────── */
+/* ── Lit-pane content ────────────────────────────────────────────────────── */
 .card-discoverer-label {
-	font-family: var(--font-display);
+	font-family: var(--font-mono);
 	font-size: var(--text-xs);
-	color: var(--ink-dim);
-	text-transform: lowercase;
-	letter-spacing: 0.18em;
+	color: var(--ink-mute);
+	text-transform: uppercase;
+	letter-spacing: 0.16em;
 	line-height: 1;
 	margin-bottom: 4px;
 }
 
 .card-discoverer-name {
-	font-family: var(--font-body);
+	font-family: var(--font-display);
 	font-style: italic;
+	font-weight: 700;
 	font-size: var(--text-lg);
-	font-weight: 400;
-	color: var(--ink-bright);
+	color: var(--ink);
 	line-height: var(--lh-tight);
 }
 
 .card-name {
-	font-family: var(--font-display);
+	font-family: var(--font-mono);
 	font-size: var(--text-sm);
 	font-weight: 400;
-	color: var(--ink-bright);
-	text-transform: lowercase;
-	letter-spacing: 0.16em;
+	color: var(--gold-deep);
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
 	line-height: var(--lh-snug);
 	margin-top: 4px;
-	opacity: 0.85;
 }
 
 .card-path {
-	font-family: var(--font-display);
+	font-family: var(--font-mono);
 	font-size: var(--text-xs);
 	color: var(--ink-soft);
-	text-transform: lowercase;
-	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	letter-spacing: 0.12em;
 	line-height: var(--lh-snug);
 }
 
 .locked-path {
 	margin-top: 8px;
-	color: color-mix(in oklab, var(--ink-dim) 80%, var(--pane-color));
+	color: var(--ink-mute);
 }
 
 .card-lore {
 	font-family: var(--font-body);
-	font-size: var(--text-base);
-	color: var(--ink-bright);
+	font-size: var(--text-sm);
+	color: var(--ink-soft);
 	line-height: var(--lh-body);
 	flex: 1;
 	margin-top: 6px;
-	font-variant-ligatures: common-ligatures historical-ligatures;
 }
 
 .card-date {
-	font-family: var(--font-body);
+	font-family: var(--font-display);
 	font-style: italic;
 	font-size: var(--text-xs);
-	color: var(--ink-soft);
+	color: var(--ink-mute);
 	margin-top: auto;
 	align-self: flex-end;
-	opacity: 0.8;
+	opacity: 0.85;
 }
 
-/* ── Mobile: 2-column lancet form ────────────────────────────────────── */
+/* ── Mobile: 2-column lancet form ────────────────────────────────────────── */
 @media (max-width: 599px) {
 	.app {
 		padding: 1.75rem 0.875rem 2.5rem;
@@ -386,12 +512,17 @@ header h1 {
 	}
 
 	header h1 {
-		font-size: 1.25rem;
+		font-size: clamp(32px, 9vw, 44px);
+	}
+
+	.subtitle {
+		font-size: 14px;
 		letter-spacing: 0.12em;
 	}
 
 	.intro {
 		margin-top: 1.125rem;
+		font-size: var(--text-sm);
 	}
 
 	.grid-frame {
@@ -399,26 +530,40 @@ header h1 {
 		grid-template-rows: 1fr;
 	}
 
-	.axis-headers {
-		display: none;
-	}
+	.axis-headers { display: none; }
 
 	.grid-wrapper {
 		grid-column: 1;
 		grid-row: 1;
+		padding: 14px;
+		border-radius: 14px;
+	}
+
+	.grid-wrapper::after {
+		border-radius: 14px;
+		background-position:
+			top 8px left 8px,
+			top 8px right 8px,
+			bottom 8px left 8px,
+			bottom 8px right 8px;
+		background-size: 14px 14px;
+	}
+
+	.grid-inner {
+		padding: 10px;
+		border-radius: 8px;
 	}
 
 	.grid {
 		grid-template-columns: repeat(2, 1fr);
+		gap: 8px;
 	}
 
-	.card-path {
-		display: block;
-	}
+	.card-path { display: block; }
 
 	.combo-card {
 		min-height: 190px;
-		padding: 14px 14px 10px;
+		padding: 16px 14px 12px;
 	}
 
 	.card-glyph {
