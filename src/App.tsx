@@ -120,8 +120,7 @@ export default function App(): JSX.Element {
 				)}
 				<p className="intro">
 					Each soul in MythWar may be reborn twice, choosing a new race at each turning.
-					Sixteen paths run between the four races. The first to walk each earns a pane
-					of this window forever.
+					Sixteen paths run between the four races. The first to walk each earns a space upon this board forever.
 				</p>
 			</header>
 			<ComboGrid unlocked={unlocked} illuminating={illuminating} />
