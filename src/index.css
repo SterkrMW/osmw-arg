@@ -432,7 +432,7 @@ header h1 {
 .card-glyph {
 	width: 2.4rem;
 	height: 2.4rem;
-	color: color-mix(in oklab, var(--ink-mute) 55%, var(--pane-color));
+	object-fit: contain;
 	opacity: 0.6;
 	filter: drop-shadow(0 1px 0 rgba(255, 250, 235, 0.5));
 }
