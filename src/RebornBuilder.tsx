@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { ChangeEvent, CSSProperties } from 'react';
 import ComboBack from './ComboBack';
+import GenderToggle from './GenderToggle';
 import RaceGlyph from './RaceGlyph';
 import type { Gender } from './rebornCombos';
 import {
@@ -56,7 +57,8 @@ export default function RebornBuilder(): JSX.Element {
 		[origin, first, second],
 	);
 
-	// Colour the tile by the character's final race (Z), like the wall's panes.
+	const showGender = pathHasGenderSplit(path);
+	// Colour the card by first→second (Y→Z), matching the wall's pane mapping.
 	const paneStyle = { '--pane-color': `var(--pane-${first}_${second})` } as CSSProperties;
 	const pathLabel = `${RACE_NAMES[origin]} → ${RACE_NAMES[first]} → ${RACE_NAMES[second]}`;
 
@@ -94,13 +96,18 @@ export default function RebornBuilder(): JSX.Element {
 
 			<div className="builder-result">
 				<div className="combo-modal-card builder-card" style={paneStyle}>
-					<div className="builder-card-title">{pathLabel}</div>
+					<div className="builder-card-header">
+						<div className="builder-card-title">{pathLabel}</div>
+						{showGender && (
+							<GenderToggle gender={gender} onChange={setGender} />
+						)}
+					</div>
 					<ComboBack
 						path={path}
 						pathLabel="Bonuses after both rebirths"
 						gender={gender}
 						onGenderChange={setGender}
-						showGenderToggle={pathHasGenderSplit(path)}
+						showGenderToggle={false}
 						active={true}
 						maxEffectAffinity={MAX_EFFECT_AFFINITY_2RB}
 						maxDamageBonus={MAX_DAMAGE_BONUS_2RB}

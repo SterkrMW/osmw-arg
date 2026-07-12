@@ -1,6 +1,6 @@
-import type { MouseEvent } from 'react';
 import StarMeter from './StarMeter';
 import StatRadar from './StatRadar';
+import GenderToggle from './GenderToggle';
 import type { Gender, RebornPath, StatKey } from './rebornCombos';
 import {
 	MAX_DAMAGE_BONUS,
@@ -50,40 +50,12 @@ export default function ComboBack({
 		.map(([key, raw]) => ({ key, value: resolveGendered(raw, gender) }))
 		.filter((r) => r.value !== 0);
 
-	const tab = active ? 0 : -1;
-
-	const pickGender = (next: Gender) => (e: MouseEvent<HTMLButtonElement>): void => {
-		e.stopPropagation();
-		onGenderChange(next);
-	};
-
 	return (
 		<div className="combo-back-body">
 			<div className="back-header">
 				<div className="back-path">{pathLabel}</div>
 				{showGenderToggle && (
-					<div className="gender-toggle" role="group" aria-label="Bonus values by gender">
-						<button
-							type="button"
-							tabIndex={tab}
-							className={gender === 'male' ? 'is-active' : ''}
-							aria-pressed={gender === 'male'}
-							aria-label="Show male bonuses"
-							onClick={pickGender('male')}
-						>
-							♂
-						</button>
-						<button
-							type="button"
-							tabIndex={tab}
-							className={gender === 'female' ? 'is-active' : ''}
-							aria-pressed={gender === 'female'}
-							aria-label="Show female bonuses"
-							onClick={pickGender('female')}
-						>
-							♀
-						</button>
-					</div>
+					<GenderToggle gender={gender} onChange={onGenderChange} active={active} />
 				)}
 			</div>
 
