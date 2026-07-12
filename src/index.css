@@ -1221,7 +1221,7 @@ header h1 {
 
 .builder-controls {
 	display: flex;
-	align-items: flex-end;
+	align-items: flex-start;
 	justify-content: center;
 	gap: 14px;
 	flex-wrap: wrap;
@@ -1231,11 +1231,13 @@ header h1 {
 	display: flex;
 	flex-direction: column;
 	gap: 6px;
-	width: 194px;
+	width: 220px;
 	text-align: left;
 }
 
 .stage-step {
+	display: block;
+	line-height: 1;
 	font-family: var(--font-label);
 	font-size: var(--text-xs);
 	font-weight: 600;
@@ -1259,6 +1261,8 @@ header h1 {
 	align-items: center;
 	min-height: 48px;
 	border-radius: 10px;
+	/* Clip the mounted gender segment's fill to the pill's rounded corners. */
+	overflow: hidden;
 	background:
 		radial-gradient(ellipse at 20% 0%,
 			color-mix(in oklab, var(--stage-color, var(--gold)) 14%, var(--cream)) 0%,
@@ -1266,19 +1270,65 @@ header h1 {
 		linear-gradient(180deg,
 			color-mix(in oklab, var(--stage-color, var(--gold)) 12%, var(--parchment)) 0%,
 			color-mix(in oklab, var(--stage-color, var(--gold)) 20%, var(--parchment-shade)) 100%);
+	box-shadow: 0 2px 6px color-mix(in oklab, var(--ink-shadow) 28%, transparent);
+	transition: box-shadow 0.18s var(--ease-out), background 0.18s var(--ease-out);
+}
+
+/* Border + top highlight as an overlay so the mounted gender segment's fill
+   can't paint over the pill's edge. */
+.stage-field::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	border-radius: 10px;
+	pointer-events: none;
 	box-shadow:
 		inset 0 0 0 1px color-mix(in oklab, var(--stage-color, var(--wood-dark)) 28%, transparent),
-		inset 0 3px 0 color-mix(in oklab, var(--stage-color, var(--gold)) 55%, transparent),
-		0 2px 6px color-mix(in oklab, var(--ink-shadow) 28%, transparent);
-	transition: box-shadow 0.18s var(--ease-out), background 0.18s var(--ease-out);
+		inset 0 3px 0 color-mix(in oklab, var(--stage-color, var(--gold)) 55%, transparent);
+	transition: box-shadow 0.18s var(--ease-out);
+}
+
+/* Hover — a step below the focus ring: firmer edge + a little more lift. */
+.stage-field:hover {
+	box-shadow: 0 4px 10px color-mix(in oklab, var(--ink-shadow) 34%, transparent);
+}
+
+.stage-field:hover::after {
+	box-shadow:
+		inset 0 0 0 1px color-mix(in oklab, var(--stage-color, var(--wood-dark)) 34%, transparent),
+		inset 0 3px 0 color-mix(in oklab, var(--stage-color, var(--gold)) 63%, transparent);
 }
 
 .stage-field:focus-within {
 	box-shadow:
-		inset 0 0 0 1px color-mix(in oklab, var(--stage-color, var(--wood-dark)) 35%, transparent),
-		inset 0 3px 0 color-mix(in oklab, var(--stage-color, var(--gold)) 70%, transparent),
 		0 2px 6px color-mix(in oklab, var(--ink-shadow) 28%, transparent),
 		0 0 0 2px color-mix(in oklab, var(--stage-color, var(--gold-deep)) 55%, transparent);
+}
+
+.stage-field:focus-within::after {
+	box-shadow:
+		inset 0 0 0 1px color-mix(in oklab, var(--stage-color, var(--wood-dark)) 35%, transparent),
+		inset 0 3px 0 color-mix(in oklab, var(--stage-color, var(--gold)) 70%, transparent);
+}
+
+/* Soft race-tinted glow so the hovered/focused stage is unmistakable. */
+.stage-field:hover .stage-select,
+.stage-field:focus-within .stage-select {
+	text-shadow: 0 0 9px color-mix(in oklab, var(--stage-color, var(--gold)) 60%, transparent);
+}
+
+.stage-field:hover .stage-glyph,
+.stage-field:focus-within .stage-glyph {
+	filter: drop-shadow(0 0 5px color-mix(in oklab, var(--stage-color, var(--gold)) 55%, transparent));
+}
+
+/* Race selector fills the left of the field; the caret anchors to its edge. */
+.stage-race {
+	position: relative;
+	flex: 1 1 auto;
+	display: flex;
+	align-items: center;
+	min-width: 0;
 }
 
 .stage-glyph {
@@ -1287,6 +1337,7 @@ header h1 {
 	object-fit: contain;
 	margin-left: 10px;
 	pointer-events: none;
+	transition: filter 0.18s var(--ease-out);
 }
 
 .stage-select {
@@ -1301,8 +1352,9 @@ header h1 {
 	font-size: var(--text-md);
 	letter-spacing: var(--tracking-display);
 	color: var(--ink);
-	padding: 10px 30px 10px 8px;
+	padding: 10px 22px 10px 8px;
 	cursor: pointer;
+	transition: text-shadow 0.18s var(--ease-out);
 	/* Render the native option popup light, not in the OS dark theme. */
 	color-scheme: light;
 }
@@ -1319,10 +1371,45 @@ header h1 {
 
 .stage-caret {
 	position: absolute;
-	right: 11px;
+	right: 8px;
 	color: var(--ink-soft);
 	font-size: var(--text-xs);
 	pointer-events: none;
+}
+
+/* Per-stage gender toggle, mounted inside the field as a right-hand segment
+   divided by a hairline and tinted by the race colour. */
+.stage-field .gender-toggle {
+	align-self: stretch;
+	flex: none;
+	background: none;
+	border: none;
+	border-left: 1px solid color-mix(in oklab, var(--stage-color, var(--wood-dark)) 26%, transparent);
+	border-radius: 0;
+}
+
+.stage-field .gender-toggle button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 34px;
+	min-height: 0;
+	padding: 0 10px;
+	color: var(--ink-mute);
+}
+
+.stage-field .gender-toggle button + button {
+	border-left: 1px solid color-mix(in oklab, var(--stage-color, var(--wood-dark)) 20%, transparent);
+}
+
+.stage-field .gender-toggle button.is-active {
+	background: color-mix(in oklab, var(--stage-color, var(--gold)) 42%, var(--parchment));
+	color: var(--ink);
+}
+
+.stage-field .gender-toggle button:not(.is-active):hover {
+	background: color-mix(in oklab, var(--stage-color, var(--gold)) 20%, var(--parchment));
+	color: var(--ink);
 }
 
 .builder-arrow {
@@ -1330,8 +1417,10 @@ header h1 {
 	font-size: var(--text-xl);
 	line-height: 1;
 	color: var(--gold);
-	align-self: center;
-	padding-bottom: var(--space-xs);
+	/* Align the arrow with the race field: skip the step + hint heading, then
+	   centre on the 48px field. Robust to the type-scale tokens. */
+	align-self: flex-start;
+	margin-top: calc(var(--text-xs) + var(--text-sm) + 36px - var(--text-xl) / 2);
 	text-shadow: 0 1px 2px color-mix(in oklab, var(--ink-shadow) 50%, transparent);
 }
 
@@ -1401,6 +1490,7 @@ header h1 {
 	.builder-arrow {
 		transform: rotate(90deg);
 		align-self: center;
+		margin-top: 0;
 		padding: 0;
 		font-size: var(--text-md);
 	}
@@ -1426,6 +1516,9 @@ header h1 {
 	.expand-btn,
 	.gender-toggle button,
 	.stage-field,
+	.stage-field::after,
+	.stage-select,
+	.stage-glyph,
 	.modal-close {
 		transition: none;
 	}

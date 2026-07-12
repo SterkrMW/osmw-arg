@@ -29,9 +29,11 @@ const file = combosFile as unknown as CombosFile;
 
 /**
  * Tier-2 (second rebirth) preset, keyed by the race held before the second
- * rebirth (Y). The base fields are already folded into reborn-combos.json's
- * X→Y path totals; only `sameRace` is an *additional* bonus, granted when the
- * final race (Z) matches Y. See buildSecondReborn().
+ * rebirth (Y). Its base fields (resistances/relativeStats) are already folded
+ * into reborn-combos.json's X→Y path totals — but they're kept here, gender-
+ * split, so buildSecondReborn() can re-resolve the tier-2 portion at the first-
+ * reborn gender independently of the origin gender. `sameRace` is the only
+ * *additional* bonus, granted when the final race (Z) matches Y.
  */
 export interface Tier2SameRace {
 	resistances: Record<string, number>;
@@ -43,6 +45,8 @@ interface Tier2Race {
 	id: string;
 	race: string;
 	label: string;
+	resistances: Record<string, GenderedNumber>;
+	relativeStats: Record<StatKey, GenderedNumber>;
 	sameRace: Tier2SameRace;
 }
 
@@ -77,10 +81,10 @@ for (const path of file.paths) {
 	pathsByKey[key] = path;
 }
 
-/** Tier-2 same-race bonus, keyed by the app's numeric race index. */
-export const tier2SameRaceByIndex: Record<number, Tier2SameRace> = {};
+/** Tier-2 presets, keyed by the app's numeric race index. */
+export const tier2ByIndex: Record<number, Tier2Race> = {};
 for (const race of tier2.races) {
-	tier2SameRaceByIndex[RACE_INDEX[race.race]] = race.sameRace;
+	tier2ByIndex[RACE_INDEX[race.race]] = race;
 }
 
 // ── Star normalisation — relative to the strongest path in each metric ───────
@@ -88,46 +92,73 @@ export const MAX_EFFECT_AFFINITY = Math.max(...file.paths.map((p) => p.effectAff
 export const MAX_DAMAGE_BONUS = Math.max(...file.paths.map((p) => p.damageBonusPercent));
 
 // ── Second-rebirth build (X → Y → Z) ─────────────────────────────────────────
-// A twice-reborn character is three races: X (origin) → Y (first reborn) → Z
-// (second reborn / final). The X→Y path total already includes tier1(X) +
-// tier2(Y) base + the X_Y secret combo; the *only* thing the second rebirth adds
-// on top is tier2(Y)'s same-race bonus, granted when the final race Z equals Y.
-
-/** Add a plain number onto a possibly-gendered value (both branches shift). */
-function addToGendered(existing: GenderedNumber | undefined, add: number): GenderedNumber {
-	if (existing === undefined) return add;
-	if (typeof existing === 'number') return existing + add;
-	return { male: existing.male + add, female: existing.female + add };
-}
+// A twice-reborn character is three races, each with its own gender:
+//   X/gx (origin) → Y/gy (first reborn) → Z (second reborn / final).
+// In the game only the *previous* race's gender feeds each rebirth: the origin
+// gender drives tier-1, the first-reborn gender drives tier-2. The final gender
+// is appearance only and changes no bonus.
+//
+// reborn-combos.json[X→Y] already sums tier1(X) + tier2(Y) base + secret(X_Y),
+// but resolved at a single gender. To let tier-1 and tier-2 take different
+// genders we resolve the path at gx, then swap the tier-2 base contribution
+// from gx to gy (the "1" and the gender-independent race bonuses cancel):
+//   value = combos(gx) − tier2Base(gx) + tier2Base(gy)  [+ sameRace if Z === Y]
+// Same-race and effect-affinity/damage are gender-independent.
 
 /**
- * Resolve the full bonuses of a second-reborn character as a RebornPath so it
- * can be rendered by the shared ComboBack view. Stats (the radar) are unchanged
- * by Z — only resistances / affinity / damage grow, and only when Z === Y.
+ * Resolve the full bonuses of a second-reborn character into a RebornPath of
+ * already-resolved plain numbers, so the shared ComboBack view can render it
+ * with no gender toggle of its own (gender is chosen per stage instead).
  */
-export function buildSecondReborn(x: number, y: number, z: number): RebornPath {
+export function buildSecondReborn(
+	x: number,
+	gx: Gender,
+	y: number,
+	gy: Gender,
+	z: number,
+): RebornPath {
 	const base = pathsByKey[`${x}_${y}`];
-	const sameRace = tier2SameRaceByIndex[y];
+	const t2 = tier2ByIndex[y];
 	const sameRaceActive = z === y;
 
-	const resistances: Record<string, GenderedNumber> = { ...base.resistances };
-	let effectAffinity = base.effectAffinity;
-	let damageBonusPercent = base.damageBonusPercent;
-
-	if (sameRaceActive && sameRace) {
-		for (const [key, value] of Object.entries(sameRace.resistances)) {
-			resistances[key] = addToGendered(resistances[key], value);
-		}
-		effectAffinity += sameRace.effectAffinity;
-		damageBonusPercent += sameRace.damageBonusPercent;
+	// Resistances: swap the tier-2 base gender, then add the same-race top-up.
+	const resistances: Record<string, number> = {};
+	const keys = new Set<string>([
+		...Object.keys(base.resistances),
+		...Object.keys(t2.resistances),
+		...(sameRaceActive ? Object.keys(t2.sameRace.resistances) : []),
+	]);
+	for (const key of keys) {
+		const value =
+			resolveGendered(base.resistances[key] ?? 0, gx) -
+			resolveGendered(t2.resistances[key] ?? 0, gx) +
+			resolveGendered(t2.resistances[key] ?? 0, gy) +
+			(sameRaceActive ? t2.sameRace.resistances[key] ?? 0 : 0);
+		if (value !== 0) resistances[key] = value;
 	}
+
+	// Relative stats: same gender swap on the tier-2 base (radar is Z-independent).
+	// Round to 3 dp (as the game does) to shed floating-point subtraction noise.
+	const relativeStats = {} as Record<StatKey, number>;
+	for (const stat of STAT_KEYS) {
+		const value =
+			resolveGendered(base.relativeStats[stat], gx) -
+			resolveGendered(t2.relativeStats[stat], gx) +
+			resolveGendered(t2.relativeStats[stat], gy);
+		relativeStats[stat] = Math.round(value * 1000) / 1000;
+	}
+
+	// Effect affinity / damage bonus are gender-independent.
+	const effectAffinity = base.effectAffinity + (sameRaceActive ? t2.sameRace.effectAffinity : 0);
+	const damageBonusPercent =
+		base.damageBonusPercent + (sameRaceActive ? t2.sameRace.damageBonusPercent : 0);
 
 	return {
 		id: `${base.startRace}_${base.secondRace}_${z}`,
 		startRace: base.startRace,
 		secondRace: base.secondRace,
 		label: base.label,
-		relativeStats: base.relativeStats,
+		relativeStats,
 		resistances,
 		effectAffinity,
 		damageBonusPercent,
@@ -138,16 +169,14 @@ export function buildSecondReborn(x: number, y: number, z: number): RebornPath {
 // so fold each path's tier2 same-race top-up into the max.
 export const MAX_EFFECT_AFFINITY_2RB = Math.max(
 	...file.paths.map(
-		(p) =>
-			p.effectAffinity +
-			(tier2SameRaceByIndex[RACE_INDEX[p.secondRace]]?.effectAffinity ?? 0),
+		(p) => p.effectAffinity + (tier2ByIndex[RACE_INDEX[p.secondRace]]?.sameRace.effectAffinity ?? 0),
 	),
 );
 export const MAX_DAMAGE_BONUS_2RB = Math.max(
 	...file.paths.map(
 		(p) =>
 			p.damageBonusPercent +
-			(tier2SameRaceByIndex[RACE_INDEX[p.secondRace]]?.damageBonusPercent ?? 0),
+			(tier2ByIndex[RACE_INDEX[p.secondRace]]?.sameRace.damageBonusPercent ?? 0),
 	),
 );
 
