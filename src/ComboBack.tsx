@@ -62,13 +62,13 @@ export default function ComboBack({
 			<div className="back-header">
 				<div className="back-path">{pathLabel}</div>
 				{showGenderToggle && (
-					<div className="gender-toggle" role="group" aria-label="Character gender">
+					<div className="gender-toggle" role="group" aria-label="Bonus values by gender">
 						<button
 							type="button"
 							tabIndex={tab}
 							className={gender === 'male' ? 'is-active' : ''}
 							aria-pressed={gender === 'male'}
-							aria-label="Male values"
+							aria-label="Show male bonuses"
 							onClick={pickGender('male')}
 						>
 							♂
@@ -78,7 +78,7 @@ export default function ComboBack({
 							tabIndex={tab}
 							className={gender === 'female' ? 'is-active' : ''}
 							aria-pressed={gender === 'female'}
-							aria-label="Female values"
+							aria-label="Show female bonuses"
 							onClick={pickGender('female')}
 						>
 							♀
@@ -116,7 +116,7 @@ export default function ComboBack({
 						))}
 					</ul>
 				) : (
-					<p className="resist-empty">None</p>
+					<p className="resist-empty">No resistance changes</p>
 				)}
 			</div>
 		</div>

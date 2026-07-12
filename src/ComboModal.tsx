@@ -46,7 +46,13 @@ export default function ComboModal({ comboKey, onClose }: Props): JSX.Element {
 			onClick={onClose}
 		>
 			<div className="combo-modal-card" style={paneStyle} onClick={(e) => e.stopPropagation()}>
-				<button ref={closeRef} type="button" className="modal-close" aria-label="Close" onClick={onClose}>
+				<button
+					ref={closeRef}
+					type="button"
+					className="modal-close"
+					aria-label="Close bonuses"
+					onClick={onClose}
+				>
 					×
 				</button>
 				{lore && <div className="modal-title">{lore.name}</div>}

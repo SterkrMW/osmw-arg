@@ -15,16 +15,9 @@ const RACE_ICONS: Record<number, string> = {
 	3: borgIcon,
 };
 
-const RACE_NAMES: Record<number, string> = {
-	0: 'Human',
-	1: 'Centaur',
-	2: 'Mage',
-	3: 'Borg',
-};
-
 export default function RaceGlyph({ race, className }: Props): JSX.Element | null {
 	const src = RACE_ICONS[race];
 	if (!src) return null;
 
-	return <img src={src} alt={RACE_NAMES[race] ?? ''} className={className} aria-hidden />;
+	return <img src={src} alt="" className={className} aria-hidden="true" />;
 }

@@ -62,11 +62,11 @@ export default function RebornBuilder(): JSX.Element {
 
 	return (
 		<div className="builder">
-			<div className="builder-controls" role="group" aria-label="Rebirth history">
+			<div className="builder-controls" role="group" aria-label="Path of three lives">
 				<RaceStage
 					id="stage-origin"
-					label="Non-Reborn"
-					hint="Born as"
+					label="Born"
+					hint="First race"
 					value={origin}
 					onChange={setOrigin}
 				/>
@@ -75,8 +75,8 @@ export default function RebornBuilder(): JSX.Element {
 				</span>
 				<RaceStage
 					id="stage-first"
-					label="First Reborn"
-					hint="Reborn into"
+					label="First rebirth"
+					hint="Becomes"
 					value={first}
 					onChange={setFirst}
 				/>
@@ -85,8 +85,8 @@ export default function RebornBuilder(): JSX.Element {
 				</span>
 				<RaceStage
 					id="stage-second"
-					label="Second Reborn"
-					hint="Ascends as"
+					label="Second rebirth"
+					hint="Ends as"
 					value={second}
 					onChange={setSecond}
 				/>
@@ -97,7 +97,7 @@ export default function RebornBuilder(): JSX.Element {
 					<div className="builder-card-title">{pathLabel}</div>
 					<ComboBack
 						path={path}
-						pathLabel="Second rebirth · full bonuses"
+						pathLabel="Bonuses after both rebirths"
 						gender={gender}
 						onGenderChange={setGender}
 						showGenderToggle={pathHasGenderSplit(path)}

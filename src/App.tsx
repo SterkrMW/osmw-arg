@@ -14,10 +14,10 @@ const ILLUMINATE_DURATION_MS = 2400;
 const ILLUMINATE_STAGGER_MS = 500;
 
 function formatRelative(seconds: number): string {
-	if (seconds < 5) return 'updated just now';
-	if (seconds < 60) return `updated ${seconds}s ago`;
+	if (seconds < 5) return 'checked just now';
+	if (seconds < 60) return `checked ${seconds}s ago`;
 	const minutes = Math.floor(seconds / 60);
-	return `updated ${minutes}m ago`;
+	return `checked ${minutes}m ago`;
 }
 
 function subtitleFor(count: number): string {
@@ -105,7 +105,7 @@ export default function App(): JSX.Element {
 			<header>
 				<h1>The Paths of Rebirth</h1>
 
-				<div className="mode-toggle" role="tablist" aria-label="View mode">
+				<div className="mode-toggle" role="tablist" aria-label="Choose a view">
 					<button
 						type="button"
 						role="tab"
@@ -122,7 +122,7 @@ export default function App(): JSX.Element {
 						className={mode === 'builder' ? 'is-active' : ''}
 						onClick={() => setMode('builder')}
 					>
-						Build Explorer
+						Trace a Path
 					</button>
 				</div>
 
@@ -149,15 +149,14 @@ export default function App(): JSX.Element {
 						)}
 						<p className="intro">
 							Each soul in MythWar may be reborn twice, choosing a new race at each
-							turning. All paths have been revealed. Select a tile to examine its
-							details.
+							turning. Sixteen paths bind the four races — the first to walk each
+							earns a pane forever. Turn a pane to read its path.
 						</p>
 					</>
 				) : (
 					<p className="intro">
-						Trace a soul through all three lives — its origin, first rebirth, and second
-						rebirth — to reveal the full stats and resistances an end-game character
-						carries.
+						Choose the race of each life — birth, first rebirth, and second — to see
+						the bonuses that path carries.
 					</p>
 				)}
 			</header>

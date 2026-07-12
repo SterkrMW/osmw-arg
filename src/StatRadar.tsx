@@ -55,7 +55,7 @@ export default function StatRadar({ values }: Props): JSX.Element {
 			className="stat-radar"
 			viewBox="0 0 240 200"
 			role="img"
-			aria-label="Relative stats: strength, intelligence, agility and stamina, where the dashed ring is baseline."
+			aria-label="Relative stats for strength, intelligence, agility, and stamina. The dashed ring is the baseline."
 			style={{ color: 'var(--pane-color)' } as CSSProperties}
 		>
 			{/* concentric guide rings */}

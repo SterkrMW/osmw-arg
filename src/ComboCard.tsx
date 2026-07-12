@@ -76,8 +76,8 @@ export default function ComboCard({
 			aria-pressed={flipped}
 			aria-label={
 				flipped
-					? `${pathLabel} path bonuses. Activate to return.`
-					: `${pathLabel} path. Activate to reveal its bonuses.`
+					? `${pathLabel} path bonuses. Turn back to the inscription.`
+					: `${pathLabel} path. Turn to see its bonuses.`
 			}
 			onClick={toggleFlip}
 			onKeyDown={onKeyDown}
@@ -87,13 +87,13 @@ export default function ComboCard({
 					<span className="flip-hint" aria-hidden="true">
 						⤾
 					</span>
-					{isUnlocked && lore ? (
+					{entry ? (
 						<>
 							<div className="card-discoverer-label">First walked by</div>
 							<div className="card-discoverer-name">{entry.discovererName}</div>
-							<div className="card-name">{lore.name}</div>
+							{lore && <div className="card-name">{lore.name}</div>}
 							<div className="card-path">{pathLabel}</div>
-							<p className="card-lore">{lore.flavourText}</p>
+							{lore && <p className="card-lore">{lore.flavourText}</p>}
 							<div className="card-date">{formatDate(entry.unlockedAt)}</div>
 						</>
 					) : (
@@ -109,7 +109,7 @@ export default function ComboCard({
 						type="button"
 						className="expand-btn"
 						tabIndex={flipped ? 0 : -1}
-						aria-label={`Enlarge ${pathLabel} bonuses`}
+						aria-label={`View larger bonuses for ${pathLabel}`}
 						onClick={(e) => {
 							e.stopPropagation();
 							onExpand(comboKey);
