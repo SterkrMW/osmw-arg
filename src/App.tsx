@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ComboGrid from './ComboGrid';
+import ComboModal from './ComboModal';
 import type { UnlockedComboEntry } from './types';
 
 export type UnlockedMap = Record<string, UnlockedComboEntry>;
@@ -29,6 +30,7 @@ export default function App(): JSX.Element {
 	const [lastFetchedAt, setLastFetchedAt] = useState<number | null>(null);
 	const [now, setNow] = useState(() => Date.now());
 	const [illuminating, setIlluminating] = useState<Set<string>>(() => new Set());
+	const [expanded, setExpanded] = useState<string | null>(null);
 
 	const knownKeysRef = useRef<Set<string>>(new Set());
 	const isFirstFetchRef = useRef(true);
@@ -123,7 +125,8 @@ export default function App(): JSX.Element {
 					Sixteen paths run between the four races. The first to walk each earns a space upon this board forever.
 				</p>
 			</header>
-			<ComboGrid unlocked={unlocked} illuminating={illuminating} />
+			<ComboGrid unlocked={unlocked} illuminating={illuminating} onExpand={setExpanded} />
+			{expanded && <ComboModal comboKey={expanded} onClose={() => setExpanded(null)} />}
 		</div>
 	);
 }

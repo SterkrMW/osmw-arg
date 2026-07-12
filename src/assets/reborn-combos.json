@@ -1,0 +1,575 @@
+{
+	"generatedAt": "2026-07-12T12:52:07.734Z",
+	"source": "RebirthConfig.ts",
+	"assumptions": {
+		"pathModel": "startRace (X) → secondRace (Y); Z unspecified",
+		"sameRaceBonuses": "tier1WhenStartEqualsSecond",
+		"relativeStatFormula": "1 + growthBonus + (raceBoostPercent / 100)"
+	},
+	"stats": [
+		"strength",
+		"intelligence",
+		"agility",
+		"stamina"
+	],
+	"paths": [
+		{
+			"id": "human_human",
+			"startRace": "human",
+			"secondRace": "human",
+			"label": "Human → Human",
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 0.8,
+				"agility": 0.8,
+				"stamina": 1.5
+			},
+			"resistances": {
+				"frailtyResist": {
+					"male": 36,
+					"female": 12
+				},
+				"chaosResist": 24,
+				"hypnotizeResist": 24,
+				"stunResist": 24,
+				"poisonResist": {
+					"male": 12,
+					"female": 36
+				}
+			},
+			"effectAffinity": 5,
+			"damageBonusPercent": 5
+		},
+		{
+			"id": "centaur_human",
+			"startRace": "centaur",
+			"secondRace": "human",
+			"label": "Centaur → Human",
+			"relativeStats": {
+				"strength": 1.1,
+				"intelligence": 1,
+				"agility": 1.25,
+				"stamina": 1.1
+			},
+			"resistances": {
+				"chaosResist": {
+					"male": 24,
+					"female": 12
+				},
+				"dodgeRate": 5,
+				"frailtyResist": {
+					"male": 12,
+					"female": 0
+				},
+				"hypnotizeResist": 12,
+				"stunResist": {
+					"male": 12,
+					"female": 24
+				},
+				"poisonResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "mage_human",
+			"startRace": "mage",
+			"secondRace": "human",
+			"label": "Mage → Human",
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 1.3,
+				"agility": 1,
+				"stamina": 1.15
+			},
+			"resistances": {
+				"fireResist": {
+					"male": 14,
+					"female": 2
+				},
+				"evilResist": 14,
+				"flashResist": 14,
+				"deathResist": 12,
+				"frailtyResist": {
+					"male": 16,
+					"female": 4
+				},
+				"chaosResist": 14,
+				"hypnotizeResist": 14,
+				"stunResist": 14,
+				"iceResist": {
+					"male": 2,
+					"female": 14
+				},
+				"poisonResist": {
+					"male": 4,
+					"female": 16
+				}
+			},
+			"effectAffinity": 10,
+			"damageBonusPercent": 3
+		},
+		{
+			"id": "borg_human",
+			"startRace": "borg",
+			"secondRace": "human",
+			"label": "Borg → Human",
+			"relativeStats": {
+				"strength": {
+					"male": 1.35,
+					"female": 1.25
+				},
+				"intelligence": {
+					"male": 1,
+					"female": 1.1
+				},
+				"agility": 1,
+				"stamina": 1.25
+			},
+			"resistances": {
+				"drainResist": 20,
+				"berserkRate": 20,
+				"berserkDamage": 24,
+				"criticalRate": 12,
+				"criticalDamage": 12,
+				"frailtyResist": {
+					"male": 18,
+					"female": 6
+				},
+				"chaosResist": 18,
+				"hypnotizeResist": 18,
+				"stunResist": 18,
+				"poisonResist": {
+					"male": 6,
+					"female": 18
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "human_centaur",
+			"startRace": "human",
+			"secondRace": "centaur",
+			"label": "Human → Centaur",
+			"relativeStats": {
+				"strength": 1.1,
+				"intelligence": 0.9,
+				"agility": 1.1,
+				"stamina": 1.65
+			},
+			"resistances": {
+				"frailtyResist": {
+					"male": 12,
+					"female": 0
+				},
+				"chaosResist": {
+					"male": 30,
+					"female": 18
+				},
+				"hypnotizeResist": 12,
+				"stunResist": {
+					"male": 18,
+					"female": 30
+				},
+				"dodgeRate": 5,
+				"poisonResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 3
+		},
+		{
+			"id": "centaur_centaur",
+			"startRace": "centaur",
+			"secondRace": "centaur",
+			"label": "Centaur → Centaur",
+			"relativeStats": {
+				"strength": 1.2,
+				"intelligence": 0.8,
+				"agility": 1.25,
+				"stamina": 1.5
+			},
+			"resistances": {
+				"chaosResist": {
+					"male": 30,
+					"female": 6
+				},
+				"dodgeRate": 10,
+				"stunResist": {
+					"male": 6,
+					"female": 30
+				}
+			},
+			"effectAffinity": 5,
+			"damageBonusPercent": 5
+		},
+		{
+			"id": "mage_centaur",
+			"startRace": "mage",
+			"secondRace": "centaur",
+			"label": "Mage → Centaur",
+			"relativeStats": {
+				"strength": 1.1,
+				"intelligence": 1.3,
+				"agility": 1.1,
+				"stamina": 1.6
+			},
+			"resistances": {
+				"fireResist": {
+					"male": 12,
+					"female": 0
+				},
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12,
+				"chaosResist": {
+					"male": 12,
+					"female": 0
+				},
+				"dodgeRate": 10,
+				"iceResist": {
+					"male": 0,
+					"female": 12
+				},
+				"stunResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 3
+		},
+		{
+			"id": "borg_centaur",
+			"startRace": "borg",
+			"secondRace": "centaur",
+			"label": "Borg → Centaur",
+			"relativeStats": {
+				"strength": {
+					"male": 1.35,
+					"female": 1.25
+				},
+				"intelligence": {
+					"male": 1,
+					"female": 1.1
+				},
+				"agility": 1.15,
+				"stamina": 1.5
+			},
+			"resistances": {
+				"drainResist": 20,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12,
+				"chaosResist": {
+					"male": 18,
+					"female": 6
+				},
+				"dodgeRate": 5,
+				"stunResist": {
+					"male": 6,
+					"female": 18
+				},
+				"pierce": 8,
+				"pierceDamage": 12
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "human_mage",
+			"startRace": "human",
+			"secondRace": "mage",
+			"label": "Human → Mage",
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 1.3,
+				"agility": 1,
+				"stamina": 1.15
+			},
+			"resistances": {
+				"frailtyResist": {
+					"male": 12,
+					"female": 0
+				},
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12,
+				"fireResist": {
+					"male": 16,
+					"female": 4
+				},
+				"evilResist": 16,
+				"flashResist": 16,
+				"deathResist": 12,
+				"iceResist": {
+					"male": 4,
+					"female": 16
+				},
+				"poisonResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 2,
+			"damageBonusPercent": 4
+		},
+		{
+			"id": "centaur_mage",
+			"startRace": "centaur",
+			"secondRace": "mage",
+			"label": "Centaur → Mage",
+			"relativeStats": {
+				"strength": 1.1,
+				"intelligence": 1.15,
+				"agility": 1.15,
+				"stamina": 1
+			},
+			"resistances": {
+				"chaosResist": {
+					"male": 12,
+					"female": 0
+				},
+				"dodgeRate": 10,
+				"fireResist": {
+					"male": 12,
+					"female": 0
+				},
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12,
+				"stunResist": {
+					"male": 0,
+					"female": 12
+				},
+				"iceResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 5
+		},
+		{
+			"id": "mage_mage",
+			"startRace": "mage",
+			"secondRace": "mage",
+			"label": "Mage → Mage",
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 1.3,
+				"agility": 1,
+				"stamina": 1.1
+			},
+			"resistances": {
+				"fireResist": {
+					"male": 24,
+					"female": 0
+				},
+				"evilResist": 24,
+				"flashResist": 24,
+				"deathResist": 24,
+				"criticalResist": 10,
+				"meleeResist": 10,
+				"iceResist": {
+					"male": 0,
+					"female": 24
+				}
+			},
+			"effectAffinity": 8,
+			"damageBonusPercent": 10
+		},
+		{
+			"id": "borg_mage",
+			"startRace": "borg",
+			"secondRace": "mage",
+			"label": "Borg → Mage",
+			"relativeStats": {
+				"strength": {
+					"male": 1.25,
+					"female": 1.15
+				},
+				"intelligence": {
+					"male": 1.25,
+					"female": 1.35
+				},
+				"agility": 1,
+				"stamina": 1.1
+			},
+			"resistances": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12,
+				"fireResist": {
+					"male": 12,
+					"female": 0
+				},
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12,
+				"criticalResist": 10,
+				"defense": 4,
+				"iceResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 7
+		},
+		{
+			"id": "human_borg",
+			"startRace": "human",
+			"secondRace": "borg",
+			"label": "Human → Borg",
+			"relativeStats": {
+				"strength": {
+					"male": 1.25,
+					"female": 1.15
+				},
+				"intelligence": {
+					"male": 1.1,
+					"female": 1.2
+				},
+				"agility": 1,
+				"stamina": 1.15
+			},
+			"resistances": {
+				"frailtyResist": {
+					"male": 12,
+					"female": 0
+				},
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12,
+				"drainResist": 20,
+				"berserkRate": 4,
+				"berserkDamage": 4,
+				"criticalRate": 4,
+				"criticalDamage": 4,
+				"meleeResist": 8,
+				"poisonResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "centaur_borg",
+			"startRace": "centaur",
+			"secondRace": "borg",
+			"label": "Centaur → Borg",
+			"relativeStats": {
+				"strength": {
+					"male": 1.35,
+					"female": 1.25
+				},
+				"intelligence": {
+					"male": 0.9,
+					"female": 1
+				},
+				"agility": 1.15,
+				"stamina": 1.2
+			},
+			"resistances": {
+				"chaosResist": {
+					"male": 12,
+					"female": 0
+				},
+				"dodgeRate": 5,
+				"drainResist": 20,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12,
+				"defense": 2,
+				"stunResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "mage_borg",
+			"startRace": "mage",
+			"secondRace": "borg",
+			"label": "Mage → Borg",
+			"relativeStats": {
+				"strength": {
+					"male": 1.25,
+					"female": 1.15
+				},
+				"intelligence": {
+					"male": 1.15,
+					"female": 1.25
+				},
+				"agility": 1.1,
+				"stamina": 1
+			},
+			"resistances": {
+				"fireResist": {
+					"male": 12,
+					"female": 0
+				},
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12,
+				"drainResist": 12,
+				"berserkRate": 2,
+				"berserkDamage": 2,
+				"criticalRate": 22,
+				"criticalDamage": 27,
+				"hitRate": 20,
+				"iceResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		{
+			"id": "borg_borg",
+			"startRace": "borg",
+			"secondRace": "borg",
+			"label": "Borg → Borg",
+			"relativeStats": {
+				"strength": {
+					"male": 1.85,
+					"female": 1.65
+				},
+				"intelligence": {
+					"male": 1,
+					"female": 1.2
+				},
+				"agility": 1,
+				"stamina": 1
+			},
+			"resistances": {
+				"drainResist": 24,
+				"berserkRate": 44,
+				"berserkDamage": 44,
+				"criticalRate": 39,
+				"criticalDamage": 34,
+				"hitRate": -5,
+				"pierce": 15,
+				"pierceDamage": 10
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		}
+	]
+}
