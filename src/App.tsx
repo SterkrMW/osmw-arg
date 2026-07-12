@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ComboGrid from './ComboGrid';
 import ComboModal from './ComboModal';
+import RebornBuilder from './RebornBuilder';
 import type { UnlockedComboEntry } from './types';
 
 export type UnlockedMap = Record<string, UnlockedComboEntry>;
 
 type Status = 'loading' | 'ready' | 'error';
+type Mode = 'wall' | 'builder';
 
 const TOTAL_PATHS = 16;
 const ILLUMINATE_DURATION_MS = 2400;
@@ -25,6 +27,7 @@ function subtitleFor(count: number): string {
 }
 
 export default function App(): JSX.Element {
+	const [mode, setMode] = useState<Mode>('wall');
 	const [unlocked, setUnlocked] = useState<UnlockedMap>({});
 	const [status, setStatus] = useState<Status>('loading');
 	const [lastFetchedAt, setLastFetchedAt] = useState<number | null>(null);
@@ -101,32 +104,78 @@ export default function App(): JSX.Element {
 		<div className="app">
 			<header>
 				<h1>The Paths of Rebirth</h1>
-				{status === 'ready' && (
-					<p className="subtitle">
-						{subtitleFor(discoveredCount)}
-						{updatedLabel && (
-							<>
-								{' '}
-								<span className="subtitle-meta">· {updatedLabel}</span>
-							</>
+
+				<div className="mode-toggle" role="tablist" aria-label="View mode">
+					<button
+						type="button"
+						role="tab"
+						aria-selected={mode === 'wall'}
+						className={mode === 'wall' ? 'is-active' : ''}
+						onClick={() => setMode('wall')}
+					>
+						The Wall
+					</button>
+					<button
+						type="button"
+						role="tab"
+						aria-selected={mode === 'builder'}
+						className={mode === 'builder' ? 'is-active' : ''}
+						onClick={() => setMode('builder')}
+					>
+						Build Explorer
+					</button>
+				</div>
+
+				{mode === 'wall' ? (
+					<>
+						{status === 'ready' && (
+							<p className="subtitle">
+								{subtitleFor(discoveredCount)}
+								{updatedLabel && (
+									<>
+										{' '}
+										<span className="subtitle-meta">· {updatedLabel}</span>
+									</>
+								)}
+							</p>
 						)}
+						{status === 'error' && (
+							<p className="subtitle subtitle-error">
+								The wall could not be reached.{' '}
+								<button type="button" className="retry-button" onClick={retry}>
+									Try again
+								</button>
+							</p>
+						)}
+						<p className="intro">
+							Each soul in MythWar may be reborn twice, choosing a new race at each
+							turning. All paths have been revealed. Select a tile to examine its
+							details.
+						</p>
+					</>
+				) : (
+					<p className="intro">
+						Trace a soul through all three lives — its origin, first rebirth, and second
+						rebirth — to reveal the full stats and resistances an end-game character
+						carries.
 					</p>
 				)}
-				{status === 'error' && (
-					<p className="subtitle subtitle-error">
-						The wall could not be reached.{' '}
-						<button type="button" className="retry-button" onClick={retry}>
-							Try again
-						</button>
-					</p>
-				)}
-				<p className="intro">
-					Each soul in MythWar may be reborn twice, choosing a new race at each turning.
-					All paths have been revealed. Select a tile to examine its details.
-				</p>
 			</header>
-			<ComboGrid unlocked={unlocked} illuminating={illuminating} onExpand={setExpanded} />
-			{expanded && <ComboModal comboKey={expanded} onClose={() => setExpanded(null)} />}
+
+			{mode === 'wall' ? (
+				<>
+					<ComboGrid
+						unlocked={unlocked}
+						illuminating={illuminating}
+						onExpand={setExpanded}
+					/>
+					{expanded && (
+						<ComboModal comboKey={expanded} onClose={() => setExpanded(null)} />
+					)}
+				</>
+			) : (
+				<RebornBuilder />
+			)}
 		</div>
 	);
 }

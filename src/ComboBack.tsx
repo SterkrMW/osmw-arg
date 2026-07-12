@@ -19,6 +19,9 @@ interface Props {
 	showGenderToggle: boolean;
 	/** true while this face is the one on show (drives tab order). */
 	active: boolean;
+	/** Star-scale ceilings — overridden by the second-rebirth builder. */
+	maxEffectAffinity?: number;
+	maxDamageBonus?: number;
 }
 
 function formatResist(value: number): string {
@@ -32,6 +35,8 @@ export default function ComboBack({
 	onGenderChange,
 	showGenderToggle,
 	active,
+	maxEffectAffinity = MAX_EFFECT_AFFINITY,
+	maxDamageBonus = MAX_DAMAGE_BONUS,
 }: Props): JSX.Element {
 	const stats = STAT_KEYS.reduce<Record<StatKey, number>>(
 		(acc, key) => {
@@ -87,11 +92,11 @@ export default function ComboBack({
 			<div className="back-meters">
 				<StarMeter
 					label="Effect Affinity"
-					stars={toStars(path.effectAffinity, MAX_EFFECT_AFFINITY)}
+					stars={toStars(path.effectAffinity, maxEffectAffinity)}
 				/>
 				<StarMeter
 					label="Damage Bonus"
-					stars={toStars(path.damageBonusPercent, MAX_DAMAGE_BONUS)}
+					stars={toStars(path.damageBonusPercent, maxDamageBonus)}
 				/>
 			</div>
 

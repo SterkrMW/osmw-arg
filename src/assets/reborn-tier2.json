@@ -1,0 +1,162 @@
+{
+	"generatedAt": "2026-07-12T15:26:26.589Z",
+	"source": "RebirthConfig.ts",
+	"tier": 2,
+	"usage": "Bonuses granted at second rebirth from the race held before that rebirth (Y). Add sameRace when final race Z equals Y. Pair with reborn-combos.json (X->Y path totals) for full XYZ preview.",
+	"stats": ["strength", "intelligence", "agility", "stamina"],
+	"races": [
+		{
+			"id": "human",
+			"race": "human",
+			"label": "Human",
+			"resistances": {
+				"frailtyResist": {
+					"male": 12,
+					"female": 0
+				},
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12,
+				"poisonResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "stamina",
+				"bonus": 15
+			},
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 1,
+				"agility": 1,
+				"stamina": 1.15
+			},
+			"sameRace": {
+				"resistances": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		{
+			"id": "centaur",
+			"race": "centaur",
+			"label": "Centaur",
+			"resistances": {
+				"chaosResist": {
+					"male": 12,
+					"female": 0
+				},
+				"dodgeRate": 5,
+				"stunResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"stamina": 0.5
+			},
+			"raceStatBonus": {
+				"stat": "agility",
+				"bonus": 10
+			},
+			"relativeStats": {
+				"strength": 1.1,
+				"intelligence": 1,
+				"agility": 1.1,
+				"stamina": 1.5
+			},
+			"sameRace": {
+				"resistances": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		{
+			"id": "mage",
+			"race": "mage",
+			"label": "Mage",
+			"resistances": {
+				"fireResist": {
+					"male": 12,
+					"female": 0
+				},
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12,
+				"iceResist": {
+					"male": 0,
+					"female": 12
+				}
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "intelligence",
+				"bonus": 15
+			},
+			"relativeStats": {
+				"strength": 1,
+				"intelligence": 1.15,
+				"agility": 1,
+				"stamina": 1
+			},
+			"sameRace": {
+				"resistances": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 7
+			}
+		},
+		{
+			"id": "borg",
+			"race": "borg",
+			"label": "Borg",
+			"resistances": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12
+			},
+			"statGrowthBonuses": {
+				"strength": {
+					"male": 0.1,
+					"female": 0
+				},
+				"intelligence": {
+					"male": 0,
+					"female": 0.1
+				}
+			},
+			"raceStatBonus": {
+				"stat": "strength",
+				"bonus": 15
+			},
+			"relativeStats": {
+				"strength": {
+					"male": 1.25,
+					"female": 1.15
+				},
+				"intelligence": {
+					"male": 1,
+					"female": 1.1
+				},
+				"agility": 1,
+				"stamina": 1
+			},
+			"sameRace": {
+				"resistances": {
+					"criticalRate": 15,
+					"criticalDamage": 10,
+					"berserkRate": 15,
+					"berserkDamage": 10,
+					"pierce": 15,
+					"pierceDamage": 10
+				},
+				"effectAffinity": 0,
+				"damageBonusPercent": 0
+			}
+		}
+	]
+}
