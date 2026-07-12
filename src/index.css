@@ -313,9 +313,12 @@ header h1 {
 .card-path { display: none; }
 
 /* ── Flip scaffold — each grid cell is a tile that turns to show its bonuses ─ */
+/* Faces share one grid cell so the taller face (often long flavour text) sizes the tile. */
 .combo-tile {
+	--tile-min-h: 320px;
 	position: relative;
-	min-height: 320px;
+	display: flex;
+	flex-direction: column;
 	border-radius: 6px;
 	cursor: pointer;
 	perspective: 1200px;
@@ -332,8 +335,10 @@ header h1 {
 }
 
 .combo-tile-inner {
-	position: absolute;
-	inset: 0;
+	flex: 1 1 auto;
+	display: grid;
+	width: 100%;
+	min-height: var(--tile-min-h);
 	transform-style: preserve-3d;
 	transition: transform 0.6s cubic-bezier(0.2, 0.75, 0.25, 1);
 }
@@ -343,11 +348,14 @@ header h1 {
 }
 
 .combo-tile-inner .combo-face {
-	position: absolute;
-	inset: 0;
-	height: 100%;
+	grid-area: 1 / 1;
+	min-height: var(--tile-min-h);
 	backface-visibility: hidden;
 	-webkit-backface-visibility: hidden;
+}
+
+.combo-tile-inner .combo-face-front {
+	transform: rotateY(0deg); /* establish a 3D plane for backface-visibility */
 }
 
 .combo-tile-inner .combo-face-back {
@@ -910,7 +918,7 @@ header h1 {
 	}
 
 	.combo-tile {
-		min-height: 306px;
+		--tile-min-h: 306px;
 	}
 
 	.combo-face-front .card-path { display: block; }
