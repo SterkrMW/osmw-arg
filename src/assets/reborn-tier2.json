@@ -1,5 +1,5 @@
 {
-	"generatedAt": "2026-07-12T15:26:26.589Z",
+	"generatedAt": "2026-08-17T19:16:11.304Z",
 	"source": "RebirthConfig.ts",
 	"tier": 2,
 	"usage": "Bonuses granted at second rebirth from the race held before that rebirth (Y). Add sameRace when final race Z equals Y. Pair with reborn-combos.json (X->Y path totals) for full XYZ preview.",
@@ -22,7 +22,9 @@
 					"female": 12
 				}
 			},
-			"statGrowthBonuses": {},
+			"statGrowthBonuses": {
+				"stamina": 0.1
+			},
 			"raceStatBonus": {
 				"stat": "stamina",
 				"bonus": 15
@@ -31,7 +33,7 @@
 				"strength": 1,
 				"intelligence": 1,
 				"agility": 1,
-				"stamina": 1.15
+				"stamina": 1.25
 			},
 			"sameRace": {
 				"resistances": {},
@@ -56,6 +58,7 @@
 			},
 			"statGrowthBonuses": {
 				"strength": 0.1,
+				"agility": 0.025,
 				"stamina": 0.5
 			},
 			"raceStatBonus": {
@@ -65,7 +68,7 @@
 			"relativeStats": {
 				"strength": 1.1,
 				"intelligence": 1,
-				"agility": 1.1,
+				"agility": 1.125,
 				"stamina": 1.5
 			},
 			"sameRace": {
