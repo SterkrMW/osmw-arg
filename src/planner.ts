@@ -219,27 +219,65 @@ export function calculatePath(selection: PathSelection): PathResult {
 	};
 }
 
-// One scale for the entire catalog: selections never change chart or star scales.
-const catalog: PathResult[] = [];
+export interface PlannerCatalogEntry {
+	selection: PathSelection;
+	result: PathResult;
+}
+
+// Final gender does not change numerical results. Retain the 256 effective
+// combinations once, in race/gender order, for scales and the path finder.
+const catalog: PlannerCatalogEntry[] = [];
 for (const x of races)
-	for (const y of races)
-		for (const z of races) {
-			for (const gx of genders)
-				for (const gy of genders) {
-					catalog.push(
-						calculatePath({
-							origin: { race: x, gender: gx },
-							first: { race: y, gender: gy },
-							final: { race: z, gender: 'male' },
-						}),
-					);
+	for (const gx of genders)
+		for (const y of races)
+			for (const gy of genders)
+				for (const z of races) {
+					const selection: PathSelection = {
+						origin: { race: x, gender: gx },
+						first: { race: y, gender: gy },
+						final: { race: z, gender: 'male' },
+					};
+					catalog.push({ selection, result: calculatePath(selection) });
 				}
-		}
+
+/** A detached snapshot: callers may edit selections or results without altering the catalog. */
+export function getPathCatalog(): PlannerCatalogEntry[] {
+	return catalog.map(({ selection, result }) => ({
+		selection: {
+			origin: { ...selection.origin },
+			first: { ...selection.first },
+			final: { ...selection.final },
+		},
+		result: {
+			...result,
+			baseGrowth: { ...result.baseGrowth },
+			rebirthGrowth: { ...result.rebirthGrowth },
+			raceGrowth: { ...result.raceGrowth },
+			additiveGrowth: { ...result.additiveGrowth },
+			raceBonusPercent: { ...result.raceBonusPercent },
+			growthRates: { ...result.growthRates },
+			resistances: { ...result.resistances },
+			sources: result.sources.map(source => ({
+				...source,
+				resistances: { ...source.resistances },
+				additiveGrowth: { ...source.additiveGrowth },
+				raceBonusPercent: { ...source.raceBonusPercent },
+			})),
+		},
+	}));
+}
+
+// One scale for the entire catalog: selections never change chart or star scales.
 export const GROWTH_CEILINGS: GrowthValues = Object.fromEntries(
-	keys.map(key => [key, Math.ceil(Math.max(...catalog.map(result => result.growthRates[key])))]),
+	keys.map(key => [
+		key,
+		Math.ceil(Math.max(...catalog.map(({ result }) => result.growthRates[key]))),
+	]),
 ) as GrowthValues;
-export const MAX_PLANNER_AFFINITY = Math.max(...catalog.map(result => result.effectAffinity));
-export const MAX_PLANNER_DAMAGE = Math.max(...catalog.map(result => result.damageBonusPercent));
+export const MAX_PLANNER_AFFINITY = Math.max(...catalog.map(({ result }) => result.effectAffinity));
+export const MAX_PLANNER_DAMAGE = Math.max(
+	...catalog.map(({ result }) => result.damageBonusPercent),
+);
 
 export function bonusLabel(key: string): string {
 	if (key === 'pierce') return 'Pierce Rate';

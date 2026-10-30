@@ -94,7 +94,7 @@ export function PathComparison({ a, b }: { a: PathResult; b: PathResult }): JSX.
 	return (
 		<section className="planner-comparison" aria-labelledby="comparison-title">
 			<div className="planner-comparison-heading">
-				<div><h2 id="comparison-title">Compare your paths</h2><p>Each difference is Path B minus Path A. Damage differences are percentage points (pp).</p></div>
+				<div><h2 id="comparison-title" tabIndex={-1}>Compare your paths</h2><p>Each difference is Path B minus Path A. Damage differences are percentage points (pp).</p></div>
 				<label className="comparison-filter"><input type="checkbox" checked={differencesOnly} onChange={(event) => setDifferencesOnly(event.target.checked)} /> Show differences only</label>
 			</div>
 			{rows.length === 0 ? <p className="comparison-empty" role="status">These paths give the same growth rates and bonuses. Change a race or an earlier gender to explore another path.</p> : <table className="comparison-table">

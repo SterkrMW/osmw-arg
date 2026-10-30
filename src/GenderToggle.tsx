@@ -6,6 +6,8 @@ interface Props {
 	onChange: (gender: Gender) => void;
 	/** When false, buttons leave the tab order (hidden face / inactive panel). */
 	active?: boolean;
+	/** Pinned life: keep both gender choices visible but read-only. */
+	disabled?: boolean;
 	/** Overrides the aria labels — e.g. per-stage in the builder. */
 	label?: string;
 }
@@ -14,6 +16,7 @@ export default function GenderToggle({
 	gender,
 	onChange,
 	active = true,
+	disabled = false,
 	label,
 }: Props): JSX.Element {
 	const tab = active ? 0 : -1;
@@ -23,13 +26,14 @@ export default function GenderToggle({
 
 	const pick = (next: Gender) => (e: MouseEvent<HTMLButtonElement>): void => {
 		e.stopPropagation();
-		onChange(next);
+		if (!disabled) onChange(next);
 	};
 
 	return (
 		<div className="gender-toggle" role="group" aria-label={groupLabel}>
 			<button
 				type="button"
+				disabled={disabled}
 				tabIndex={tab}
 				className={gender === 'male' ? 'is-active' : ''}
 				aria-pressed={gender === 'male'}
@@ -40,6 +44,7 @@ export default function GenderToggle({
 			</button>
 			<button
 				type="button"
+				disabled={disabled}
 				tabIndex={tab}
 				className={gender === 'female' ? 'is-active' : ''}
 				aria-pressed={gender === 'female'}
