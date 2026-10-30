@@ -8,9 +8,10 @@ interface Props {
 	unlocked: UnlockedMap;
 	illuminating: Set<string>;
 	onExpand: (comboKey: string) => void;
+	showChartValues: boolean;
 }
 
-export default function ComboGrid({ unlocked, illuminating, onExpand }: Props): JSX.Element {
+export default function ComboGrid({ unlocked, illuminating, onExpand, showChartValues }: Props): JSX.Element {
 	return (
 		<div className="grid-frame">
 			<div className="axis-headers axis-headers-top" aria-hidden="true">
@@ -37,6 +38,7 @@ export default function ComboGrid({ unlocked, illuminating, onExpand }: Props): 
 											entry={unlocked[key] ?? null}
 											isIlluminating={illuminating.has(key)}
 											onExpand={onExpand}
+											showChartValues={showChartValues}
 										/>
 									);
 								})}

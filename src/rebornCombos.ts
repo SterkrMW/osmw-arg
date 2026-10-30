@@ -66,9 +66,9 @@ export const STAT_LABELS: Record<StatKey, string> = {
 	stamina: 'STA',
 };
 
-/** relativeStats are multipliers where 1.0 is the baseline (no bonus). */
+/** Relative bonus index: 1 + additive growth + race percent / 100, not actual growth. */
 export const STAT_BASELINE = 1;
-/** Upper bound of the radar scale — the largest multiplier in the data is 1.85. */
+/** Upper bound of the Wall's index scale — the largest index in the data is 1.85. */
 export const STAT_MAX = 2;
 
 // ── Path lookup, keyed to the app's numeric race indices ─────────────────────
@@ -96,7 +96,7 @@ export const MAX_DAMAGE_BONUS = Math.max(...file.paths.map((p) => p.damageBonusP
 //   X/gx (origin) → Y/gy (first reborn) → Z (second reborn / final).
 // In the game only the *previous* race's gender feeds each rebirth: the origin
 // gender drives tier-1, the first-reborn gender drives tier-2. The final gender
-// is appearance only and changes no bonus.
+// changes none of these inherited bonuses (it can affect skills and innate stats in-game).
 //
 // reborn-combos.json[X→Y] already sums tier1(X) + tier2(Y) base + secret(X_Y),
 // but resolved at a single gender. To let tier-1 and tier-2 take different

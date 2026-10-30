@@ -12,6 +12,7 @@ interface Props {
 	entry: UnlockedComboEntry | null;
 	isIlluminating?: boolean;
 	onExpand: (comboKey: string) => void;
+	showChartValues: boolean;
 }
 
 const RACE_NAMES = ['Human', 'Centaur', 'Mage', 'Borg'];
@@ -29,6 +30,7 @@ export default function ComboCard({
 	entry,
 	isIlluminating = false,
 	onExpand,
+	showChartValues,
 }: Props): JSX.Element {
 	const [r1, r2] = comboKey.split('_').map(Number);
 	const lore = comboLore[comboKey];
@@ -129,6 +131,7 @@ export default function ComboCard({
 						onGenderChange={setGender}
 						showGenderToggle={pathHasGenderSplit(path)}
 						active={flipped}
+						showChartValues={showChartValues}
 					/>
 				</div>
 			</div>

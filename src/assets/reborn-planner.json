@@ -1,0 +1,591 @@
+{
+	"schemaVersion": 1,
+	"sources": {
+		"src/game-server/GameActions/Actions/Player/RebirthConfig.ts": "a3c78f5c6dce9dd6199fcd0ed3c48df703eeb52037de5aaca8a4c519790f0576",
+		"src/game-server/GameState/Player/PlayerCreator.ts": "91588fae7de5ae02ef3905aa47baa507831fdda820beea864cb5c94db2b2b83e",
+		"src/game-server/GameState/Player/PlayerReborn.ts": "cf12c96523d9c2dc2b3f76a29d5f62bd0074ad29356c1d21895f10645fd21d46",
+		"src/game-server/GameState/Stats/StatConfig.ts": "72631d305adebe5db547c5d0a9f462d1ac5171f5b1f492f64f7afbf5aa367014",
+		"src/game-server/GameState/Stats/StatGroup.ts": "7e31170ba1b0c962c0ca90bce01ba3026dd953bbfae72f9a133d94d4a012c2c9",
+		"src/game-server/Enums/CharacterClass.ts": "bd0127d843fac18af6969a50efdaad2c25125fe439a8e207a875c35fd920eece",
+		"scripts/generateRebornCombos.mjs": "426e6beffedd5af23df3e3778f309fd2e99dd74ff05049e2a52fcc9cb408873e"
+	},
+	"flatGrowthBonusPerRebirth": 0.05,
+	"growthRateDecimals": 3,
+	"baseGrowthByRace": {
+		"0": {
+			"strength": 1,
+			"intelligence": 1.05,
+			"agility": 0.75,
+			"stamina": 1.08
+		},
+		"1": {
+			"strength": 1,
+			"intelligence": 0.85,
+			"agility": 1.25,
+			"stamina": 0.75
+		},
+		"2": {
+			"strength": 0.7,
+			"intelligence": 1.2,
+			"agility": 0.8,
+			"stamina": 0.45
+		},
+		"3": {
+			"strength": 2.15,
+			"intelligence": 0.95,
+			"agility": 0.7,
+			"stamina": 0.85
+		}
+	},
+	"tier1": {
+		"maleHuman": {
+			"resistanceBonuses": {
+				"frailtyResist": 12,
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "stamina",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"femaleHuman": {
+			"resistanceBonuses": {
+				"poisonResist": 12,
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "stamina",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"maleCentaur": {
+			"resistanceBonuses": {
+				"chaosResist": 12,
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"agility": 0.025,
+				"stamina": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "agility",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"femaleCentaur": {
+			"resistanceBonuses": {
+				"stunResist": 12,
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"agility": 0.025,
+				"stamina": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "agility",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"maleMage": {
+			"resistanceBonuses": {
+				"fireResist": 12,
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "intelligence",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"femaleMage": {
+			"resistanceBonuses": {
+				"iceResist": 12,
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "intelligence",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"maleBorg": {
+			"resistanceBonuses": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "strength",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {
+					"criticalRate": 15,
+					"criticalDamage": 10,
+					"berserkRate": 15,
+					"berserkDamage": 10,
+					"pierce": 15,
+					"pierceDamage": 10
+				},
+				"effectAffinity": 0,
+				"damageBonusPercent": 0
+			}
+		},
+		"femaleBorg": {
+			"resistanceBonuses": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "strength",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {
+					"criticalRate": 15,
+					"criticalDamage": 10,
+					"berserkRate": 15,
+					"berserkDamage": 10,
+					"pierce": 15,
+					"pierceDamage": 10
+				},
+				"effectAffinity": 0,
+				"damageBonusPercent": 0
+			}
+		}
+	},
+	"tier2": {
+		"maleHuman": {
+			"resistanceBonuses": {
+				"frailtyResist": 12,
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12
+			},
+			"statGrowthBonuses": {
+				"stamina": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "stamina",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"femaleHuman": {
+			"resistanceBonuses": {
+				"poisonResist": 12,
+				"chaosResist": 12,
+				"hypnotizeResist": 12,
+				"stunResist": 12
+			},
+			"statGrowthBonuses": {
+				"stamina": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "stamina",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"maleCentaur": {
+			"resistanceBonuses": {
+				"chaosResist": 12,
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"agility": 0.025,
+				"stamina": 0.5
+			},
+			"raceStatBonus": {
+				"stat": "agility",
+				"bonus": 10
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"femaleCentaur": {
+			"resistanceBonuses": {
+				"stunResist": 12,
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"agility": 0.025,
+				"stamina": 0.5
+			},
+			"raceStatBonus": {
+				"stat": "agility",
+				"bonus": 10
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 5
+			}
+		},
+		"maleMage": {
+			"resistanceBonuses": {
+				"fireResist": 12,
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "intelligence",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 7
+			}
+		},
+		"femaleMage": {
+			"resistanceBonuses": {
+				"iceResist": 12,
+				"evilResist": 12,
+				"flashResist": 12,
+				"deathResist": 12
+			},
+			"statGrowthBonuses": {},
+			"raceStatBonus": {
+				"stat": "intelligence",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {},
+				"effectAffinity": 5,
+				"damageBonusPercent": 7
+			}
+		},
+		"maleBorg": {
+			"resistanceBonuses": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "strength",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {
+					"criticalRate": 15,
+					"criticalDamage": 10,
+					"berserkRate": 15,
+					"berserkDamage": 10,
+					"pierce": 15,
+					"pierceDamage": 10
+				},
+				"effectAffinity": 0,
+				"damageBonusPercent": 0
+			}
+		},
+		"femaleBorg": {
+			"resistanceBonuses": {
+				"drainResist": 12,
+				"berserkRate": 12,
+				"berserkDamage": 12,
+				"criticalRate": 12,
+				"criticalDamage": 12
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.1
+			},
+			"raceStatBonus": {
+				"stat": "strength",
+				"bonus": 15
+			},
+			"sameRace": {
+				"resistanceBonuses": {
+					"criticalRate": 15,
+					"criticalDamage": 10,
+					"berserkRate": 15,
+					"berserkDamage": 10,
+					"pierce": 15,
+					"pierceDamage": 10
+				},
+				"effectAffinity": 0,
+				"damageBonusPercent": 0
+			}
+		}
+	},
+	"secretCombos": {
+		"human_human": {
+			"resistanceBonuses": {
+				"frailtyResist": 12,
+				"poisonResist": 12
+			},
+			"statGrowthBonuses": {
+				"intelligence": -0.2,
+				"agility": -0.2,
+				"stamina": 0.3
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"human_centaur": {
+			"resistanceBonuses": {
+				"chaosResist": 6,
+				"stunResist": 6
+			},
+			"statGrowthBonuses": {
+				"intelligence": -0.1
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 3
+		},
+		"human_mage": {
+			"resistanceBonuses": {
+				"fireResist": 4,
+				"iceResist": 4,
+				"evilResist": 4,
+				"flashResist": 4
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.15
+			},
+			"effectAffinity": 2,
+			"damageBonusPercent": 4
+		},
+		"human_borg": {
+			"resistanceBonuses": {
+				"drainResist": 8,
+				"meleeResist": 8,
+				"berserkRate": -8,
+				"berserkDamage": -8,
+				"criticalRate": -8,
+				"criticalDamage": -8
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"centaur_human": {
+			"resistanceBonuses": {},
+			"statGrowthBonuses": {
+				"stamina": -0.15,
+				"agility": 0.1
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 0
+		},
+		"centaur_centaur": {
+			"resistanceBonuses": {
+				"chaosResist": 6,
+				"stunResist": 6
+			},
+			"statGrowthBonuses": {
+				"intelligence": -0.2,
+				"stamina": -0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"centaur_mage": {
+			"resistanceBonuses": {
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"stamina": -0.1
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 5
+		},
+		"centaur_borg": {
+			"resistanceBonuses": {
+				"drainResist": 8,
+				"defense": 2
+			},
+			"statGrowthBonuses": {
+				"intelligence": -0.1,
+				"stamina": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"mage_human": {
+			"resistanceBonuses": {
+				"fireResist": 2,
+				"iceResist": 2,
+				"evilResist": 2,
+				"flashResist": 2,
+				"chaosResist": 2,
+				"stunResist": 2,
+				"hypnotizeResist": 2,
+				"frailtyResist": 4,
+				"poisonResist": 4
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.15
+			},
+			"effectAffinity": 10,
+			"damageBonusPercent": 3
+		},
+		"mage_centaur": {
+			"resistanceBonuses": {
+				"dodgeRate": 5
+			},
+			"statGrowthBonuses": {
+				"intelligence": 0.15,
+				"stamina": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 3
+		},
+		"mage_mage": {
+			"resistanceBonuses": {
+				"criticalResist": 10,
+				"meleeResist": 10
+			},
+			"statGrowthBonuses": {
+				"stamina": 0.1
+			},
+			"effectAffinity": 3,
+			"damageBonusPercent": 5
+		},
+		"mage_borg": {
+			"resistanceBonuses": {
+				"criticalRate": 10,
+				"criticalDamage": 15,
+				"berserkRate": -10,
+				"berserkDamage": -10,
+				"hitRate": 20
+			},
+			"statGrowthBonuses": {
+				"agility": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"borg_human": {
+			"resistanceBonuses": {
+				"drainResist": 8,
+				"chaosResist": 6,
+				"hypnotizeResist": 6,
+				"frailtyResist": 6,
+				"stunResist": 6,
+				"poisonResist": 6,
+				"berserkRate": 8,
+				"berserkDamage": 12
+			},
+			"statGrowthBonuses": {
+				"strength": 0.1,
+				"stamina": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"borg_centaur": {
+			"resistanceBonuses": {
+				"drainResist": 8,
+				"chaosResist": 6,
+				"stunResist": 6,
+				"pierce": 8,
+				"pierceDamage": 12
+			},
+			"statGrowthBonuses": {
+				"agility": 0.05
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		},
+		"borg_mage": {
+			"resistanceBonuses": {
+				"criticalResist": 10,
+				"defense": 4
+			},
+			"statGrowthBonuses": {
+				"stamina": 0.1,
+				"intelligence": 0.1
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 7
+		},
+		"borg_borg": {
+			"resistanceBonuses": {
+				"hitRate": -5,
+				"berserkRate": 5,
+				"berserkDamage": 10
+			},
+			"statGrowthBonuses": {
+				"strength": 0.35
+			},
+			"effectAffinity": 0,
+			"damageBonusPercent": 0
+		}
+	}
+}

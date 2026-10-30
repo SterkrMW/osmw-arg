@@ -7,6 +7,12 @@
 		"start": "concurrently -n api,vite -c blue,green \"tsx scripts/dev-api.ts\" \"vite\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
+		"test": "tsx --test tests/planner.test.ts tests/plannerState.test.ts",
+		"test:exporter": "node --test tests/export-planner.test.mjs",
+		"test:browser": "node tests/browser-check.mjs",
+		"test:server-parity": "node ../../../node_modules/vitest/vitest.mjs run --config ../../../vitest.config.ts tests/server-parity.test.ts",
+		"data:export": "node scripts/export-planner.mjs",
+		"data:check": "node scripts/export-planner.mjs --check",
 		"test:unlock": "node scripts/test-unlock.mjs"
 	},
 	"dependencies": {

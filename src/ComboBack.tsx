@@ -19,6 +19,7 @@ interface Props {
 	showGenderToggle: boolean;
 	/** true while this face is the one on show (drives tab order). */
 	active: boolean;
+	showChartValues?: boolean;
 	/** Star-scale ceilings — overridden by the second-rebirth builder. */
 	maxEffectAffinity?: number;
 	maxDamageBonus?: number;
@@ -35,6 +36,7 @@ export default function ComboBack({
 	onGenderChange,
 	showGenderToggle,
 	active,
+	showChartValues = true,
 	maxEffectAffinity = MAX_EFFECT_AFFINITY,
 	maxDamageBonus = MAX_DAMAGE_BONUS,
 }: Props): JSX.Element {
@@ -59,16 +61,25 @@ export default function ComboBack({
 				)}
 			</div>
 
-			<StatRadar values={stats} />
+			<StatRadar values={stats} showValues={showChartValues} />
+			<p className="back-index-note">
+				Choose a final race in Trace a Path for actual growth rates.
+			</p>
 
 			<div className="back-meters">
 				<StarMeter
 					label="Effect Affinity"
 					stars={toStars(path.effectAffinity, maxEffectAffinity)}
+					value={path.effectAffinity}
+					unit="points"
+					showValues={showChartValues}
 				/>
 				<StarMeter
 					label="Damage Bonus"
 					stars={toStars(path.damageBonusPercent, maxDamageBonus)}
+					value={path.damageBonusPercent}
+					unit="percent"
+					showValues={showChartValues}
 				/>
 			</div>
 
