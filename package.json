@@ -3,11 +3,13 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
+	"engines": { "node": ">=22" },
 	"scripts": {
 		"start": "concurrently -n api,vite -c blue,green \"tsx scripts/dev-api.ts\" \"vite\"",
 		"build": "tsc && vite build",
 		"preview": "vite preview",
 		"test": "tsx --test tests/planner.test.ts tests/plannerState.test.ts tests/pathFinder.test.ts",
+		"test:sharing": "tsx --test tests/sharePreview.test.ts",
 		"test:exporter": "node --test tests/export-planner.test.mjs",
 		"test:browser": "node tests/browser-check.mjs",
 		"test:server-parity": "node ../../../node_modules/vitest/vitest.mjs run --config ../../../vitest.config.ts tests/server-parity.test.ts",
@@ -16,6 +18,7 @@
 		"test:unlock": "node scripts/test-unlock.mjs"
 	},
 	"dependencies": {
+		"@vercel/og": "0.8.6",
 		"curl": "^0.1.4",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",

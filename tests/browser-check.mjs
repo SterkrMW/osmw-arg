@@ -2,7 +2,8 @@
  * Local browser acceptance without touching the event service.
  * Start Vite first, then run with playwright-core installed or PLAYWRIGHT_MODULE
  * pointing at its index.mjs. BASE_URL and BROWSER_EXECUTABLE are optional.
- * All /api requests are mocked; screenshots go to the operating system temp folder.
+ * Discovery API requests are mocked; sharing previews use the local read-only endpoints.
+ * Screenshots go to the operating system temp folder.
  */
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile } from 'node:fs/promises';
@@ -46,6 +47,8 @@ async function newPage({ storageDisabled = false } = {}) {
 		const request = route.request();
 		if (new URL(request.url()).pathname === '/api/combos' && request.method() === 'GET') {
 			await route.fulfill({ json: { unlocked } });
+		} else if (['/api/og', '/api/share'].includes(new URL(request.url()).pathname) && request.method() === 'GET') {
+			await route.continue();
 		} else {
 			unexpectedApi.push(`${request.method()} ${request.url()}`);
 			await route.abort();
@@ -93,6 +96,36 @@ async function pathValues(page, id) {
 		genders: [...section.querySelectorAll('.gender-toggle button[aria-pressed="true"]')]
 			.map((element) => element.getAttribute('aria-label').split(': ').at(-1)),
 	}));
+}
+
+async function initialShareMetadata(page, href) {
+	const response = await page.request.get(href);
+	assert.equal(response.status(), 200);
+	assert.match(response.headers()['content-type'], /^text\/html/);
+	// Parse the response body in a detached document: these tags must exist before
+	// the SPA runs, because social crawlers do not execute its JavaScript.
+	return page.evaluate((html) => {
+		const document = new DOMParser().parseFromString(html, 'text/html');
+		return {
+			title: document.title,
+			meta: Object.fromEntries([...document.querySelectorAll('meta[name], meta[property]')]
+				.map((element) => [element.getAttribute('name') ?? element.getAttribute('property'), element.getAttribute('content')])),
+			imageCount: document.querySelectorAll('meta[property="og:image"]').length,
+			appRoot: document.getElementById('root') !== null,
+			appScript: document.querySelector('script[type="module"][src]') !== null,
+		};
+	}, await response.text());
+}
+
+async function sharePng(page, href) {
+	const response = await page.request.get(href);
+	assert.equal(response.status(), 200);
+	assert.equal(response.headers()['content-type'], 'image/png');
+	const png = await response.body();
+	assert.deepEqual([...png.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+	assert.equal(png.readUInt32BE(16), 1200);
+	assert.equal(png.readUInt32BE(20), 630);
+	return png;
 }
 
 async function openFinder(page) {
@@ -677,6 +710,61 @@ try {
 		assert.equal(await isolated.getByRole('combobox', { name: 'Main goal', exact: true }).inputValue(), 'growth:strength');
 		assert.equal(await isolated.locator('#path-a-origin').isDisabled(), true);
 		await assertFinderCount(isolated, 10, 32);
+	});
+
+	const previewPage = await newPage();
+	await previewPage.goto(baseUrl.href);
+	await previewPage.locator('.combo-tile').first().waitFor();
+	const sharedComparison = new URL('?planner=1&a=0m-3m-2f&b=2f-1m-0f', baseUrl);
+	await check('Comparison links return crawler-ready metadata and path-specific PNG previews', async () => {
+		const initial = await initialShareMetadata(previewPage, sharedComparison.href);
+		assert.match(initial.title, /Compare rebirth paths/);
+		assert.match(initial.meta['og:description'], /Path A: Human male → Borg male → Mage female/);
+		assert.match(initial.meta['og:description'], /Path B: Mage female → Centaur male → Human female/);
+		assert.equal(initial.meta['twitter:card'], 'summary_large_image');
+		assert.equal(initial.meta['twitter:image'], initial.meta['og:image']);
+		assert.equal(initial.meta['og:image:width'], '1200');
+		assert.equal(initial.meta['og:image:height'], '630');
+		assert.equal(initial.imageCount, 1);
+		assert.ok(initial.appRoot && initial.appScript, 'Initial HTML preserves the normal SPA');
+		const image = new URL(initial.meta['og:image']);
+		assert.equal(image.origin, baseUrl.origin);
+		assert.equal(image.pathname, '/api/og');
+		assert.equal(image.searchParams.get('a'), '0m-3m-2f');
+		assert.equal(image.searchParams.get('b'), '2f-1m-0f');
+		const originalPng = await sharePng(previewPage, image.href);
+		const alternative = new URL(sharedComparison);
+		alternative.searchParams.set('b', '3m-3f-3f');
+		const changed = await initialShareMetadata(previewPage, alternative.href);
+		assert.notEqual(changed.meta['og:image'], initial.meta['og:image']);
+		assert.notDeepEqual(await sharePng(previewPage, changed.meta['og:image']), originalPng);
+		await previewPage.goto(sharedComparison.href);
+		await previewPage.locator('#path-b').waitFor();
+		assert.deepEqual(await pathValues(previewPage, 'a'), { races: ['0', '3', '2'], genders: ['male', 'male', 'female'] });
+		assert.deepEqual(await pathValues(previewPage, 'b'), { races: ['2', '1', '0'], genders: ['female', 'male', 'female'] });
+	});
+
+	await check('Single-path previews omit retained B and malformed links use a generic preview without breaking the planner', async () => {
+		await previewPage.getByRole('button', { name: 'Close comparison', exact: true }).click();
+		await previewPage.getByRole('button', { name: 'Copy path link', exact: true }).click();
+		const singleUrl = await previewPage.getByRole('textbox', { name: 'Link to share', exact: true }).inputValue();
+		const single = await initialShareMetadata(previewPage, singleUrl);
+		assert.match(single.title, /My rebirth path/);
+		assert.doesNotMatch(single.meta['og:description'], /Path B/);
+		assert.equal(new URL(single.meta['og:image']).searchParams.has('b'), false);
+		await sharePng(previewPage, single.meta['og:image']);
+		for (const query of ['?planner=1&a=0m-3m-2f&b=4m-0m-0m', '?planner=1&a=0m-3m-2f&a=3f-3f-3f']) {
+			const malformed = new URL(query, baseUrl).href;
+			const generic = await initialShareMetadata(previewPage, malformed);
+			assert.doesNotMatch(generic.title, /Compare rebirth paths|My rebirth path/);
+			const image = new URL(generic.meta['og:image']);
+			assert.equal(image.searchParams.has('a'), false);
+			assert.equal(image.searchParams.has('b'), false);
+			await sharePng(previewPage, image.href);
+			await previewPage.goto(malformed);
+			await previewPage.locator('.planner-notice').waitFor();
+			await previewPage.locator('#path-a').waitFor();
+		}
 	});
 
 	assert.deepEqual(errors, [], 'No uncaught browser errors');

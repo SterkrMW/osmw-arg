@@ -1,4 +1,4 @@
-import plannerFile from './assets/reborn-planner.json';
+import plannerFile from './assets/reborn-planner.json' with { type: 'json' };
 import type { Gender, StatKey } from './rebornCombos';
 
 export type Race = 0 | 1 | 2 | 3;
