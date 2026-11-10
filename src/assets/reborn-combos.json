@@ -174,9 +174,10 @@
 				"poisonResist": {
 					"male": 0,
 					"female": 12
-				}
+				},
+				"meleeResist": 10
 			},
-			"effectAffinity": 3,
+			"effectAffinity": 5,
 			"damageBonusPercent": 3
 		},
 		{
